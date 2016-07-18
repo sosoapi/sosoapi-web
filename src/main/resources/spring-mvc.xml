@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="  
+       http://www.springframework.org/schema/beans   
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+       http://www.springframework.org/schema/mvc   
+       http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd   
+       http://www.springframework.org/schema/context  
+       http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<!-- 使用注解的包，包括子集 -->
+	<!-- use-default-filters = true,默认扫描@service等,事务配置时，aop设置时代理和逻辑bean需在同一个context下面 -->
+	<context:component-scan base-package="com.dev" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- 开启controller注解支持 -->
+	<!-- 3.2.X bug，不添加content-negotiation-manager时，ajax请求响应返回406错误
+		  或者如果使用*.htm,*.html等，默认就会采用[text/html]编码，若改成*.json,*.shtml等就OK
+	 -->
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter" >    
+	           <property name = "supportedMediaTypes">  
+	                <list>  
+	                     <value>text/plain;charset=UTF-8</value>  
+	                </list>  
+	            </property>  
+	       	</bean>  
+	       	
+	       	<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+		        <property name="supportedMediaTypes">  
+		            <list>  
+		                <value>application/json;charset=UTF-8</value> 
+		            </list>  
+		        </property>
+		    </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="false" />
+		<property name="favorParameter" value="false" />
+		<property name="ignoreAcceptHeader" value="false" />
+		<property name="mediaTypes">
+			<value>
+				atom=application/atom+xml
+				html=text/html
+				json=application/json
+				*=*/*
+			</value>
+		</property>
+	</bean>
+    
+    <!-- 处理静态资源 -->
+	<mvc:resources mapping="/css/**" location="/css/" cache-period="86400"/> 
+	<mvc:resources mapping="/image/**" location="/image/" cache-period="86400"/> 
+	<mvc:resources mapping="/js/**" location="/js/" cache-period="86400"/>
+	<mvc:resources mapping="/plugin/**" location="/plugin/" cache-period="604800"/>
+	<mvc:resources mapping="/swagger/**" location="/swagger/" cache-period="604800"/>
+	
+    <!-- 上传图片控制 -->
+	<bean id="multipartResolver"  
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+	    <!-- 设置上传文件的最大尺寸为1MB -->  
+	    <property name="maxUploadSize">  
+	        <value>5242880</value>  
+	    </property>  
+	</bean>
+
+	<!-- 视图解析器 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<!-- 异常处理-->
+	<bean id="exceptionResolver" class="com.dev.base.exception.handler.BaseExceptionHandler" />
+
+	<!-- MVC拦截器 -->	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/auth/**"/>
+			<bean class="com.dev.base.interceptor.PrivilegeInterceptor" />
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+			<bean class="com.dev.admin.interceptor.AdminInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>  

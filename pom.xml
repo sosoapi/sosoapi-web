@@ -1,0 +1,433 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.dev</groupId>
+	<artifactId>sosoapi-web</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<!-- 全局变量设置 -->
+	<properties>
+		<jdk.version>1.7</jdk.version>
+		<encoding.charset>UTF-8</encoding.charset>
+		<spring.version>4.0.1.RELEASE</spring.version>
+	</properties>
+
+	<!-- 发布组件到私服上 -->
+	<distributionManagement>
+		<snapshotRepository>
+			<id>SosoApiSnapshots</id>
+			<url>http://localhost:4080/nexus/content/repositories/SosoApiSnapshots</url>
+		</snapshotRepository>
+
+		<repository>
+			<id>SosoApiReleases</id>
+			<url>http://localhost:4080/nexus/content/repositories/SosoApiReleases</url>
+		</repository>
+	</distributionManagement>
+
+	<!-- 从私服上下载构件 -->
+	<repositories>
+		<repository>
+			<id>PublicRepositories</id>
+			<name>PublicRepositories</name>
+			<url>http://localhost:4080/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<!-- 更新发生的频率always 或者 never 或者 daily（默认的）或者 interval:X（X是分钟数） -->
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<!-- 从私服上下载插件 -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>PublicRepositories</id>
+			<name>PublicRepositories</name>
+			<url>http://localhost:4080/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.dev</groupId>
+			<artifactId>base-util</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.dev</groupId>
+			<artifactId>base-mybatis</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dev</groupId>
+			<artifactId>base-mail</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.3.2.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+			
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.opensymphony.quartz</groupId>
+			<artifactId>quartz-all</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.freemarker</groupId>
+		  	<artifactId>freemarker</artifactId>
+		  	<version>2.3.22</version>
+		</dependency>
+
+		<!-- swagger 相关 -->
+		<!-- swagger-core -->
+		<dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
+		<dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-core</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+
+        <!-- swagger-parser -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-compat-spec-parser</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+        
+		<!-- log4jdbc 打印完整sql语句 -->
+		<dependency>
+			<groupId>com.googlecode.log4jdbc</groupId>
+			<artifactId>log4jdbc</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- sqlite驱动 -->
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.7.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.3</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>sosoapi-web</finalName>
+		
+		<filters>
+			<filter>src/main/filters/filter-${env}.properties</filter>
+		</filters>
+		
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			
+			<resource>
+				<directory>src/main/filters</directory>
+				<excludes>
+					<exclude>**/*.properties</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+
+		<!-- 添加tomcat自动部署插件 -->
+		<!-- 部署方式: mvn clean tomcat7:deploy -->
+		<!-- ${tomcat_home}/conf/tomcat-users.xml 添加如下： <role rolename="manager-script"/> 
+			<user username="admin" password="admin" roles="manager-script"/> 其中，rolename不可更改，username和password可更改，与<configuration>标签中保持一致 -->
+		<plugins>
+			<!-- 编译 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<encoding>${encoding.charset}</encoding>
+				</configuration>
+			</plugin>
+
+			<!-- <plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<attach>true</attach>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
+
+			<!-- 资源文件编码处理 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<encoding>${encoding.charset}</encoding>
+				</configuration>
+			</plugin>
+
+			<!-- 测试用例 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<!-- 是否执行测试用例 -->
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<configuration>
+					<!-- 解决FAIL - Application already exists at path -->
+					<update>true</update>
+					<uriEncoding>${tomcat7.uriEncoding}</uriEncoding>
+
+					<!-- 本地开发相关 -->
+					<!-- 直接run as/debug as -> mvn tomcat7:run即可 -->
+					<port>${tomcat7.port}</port>
+
+					<!-- 远程部署相关 -->
+					<path>${tomcat7.path}</path>
+					<url>${tomcat7.url}</url>
+					<server>${tomcat7.server}</server>
+					<username>${tomcat7.username}</username>
+					<password>${tomcat7.password}</password>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- 根据不同环境配置不同数据库连接信息 -->
+	<!-- 激活方式 1.mvn install -Penv-dev 2.setting.xml中配置<activeProfiles> 3.通过<profile>中设置属性，当系统属性满足时激活 -->
+	<!-- 查看激活情况 -->
+	<!-- mvn help:active-profiles -->
+	<!-- mvn help:all-profiles -->
+	<profiles>
+		<!-- 开发主环境 -->
+		<profile>
+			<id>env-dev-master</id>
+			<!-- 默认生效 -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- 配置文件 -->
+				<env>dev-master</env>
+				
+				<!-- tomcat7-plugin -->
+				<tomcat7.path>/sosoapi-web</tomcat7.path>
+				<tomcat7.port>8080</tomcat7.port>
+				<tomcat7.uriEncoding>UTF-8</tomcat7.uriEncoding>
+				<tomcat7.url>http://localhost:8080/manager/text</tomcat7.url>
+				<tomcat7.server>tomcat7</tomcat7.server>
+				<tomcat7.username></tomcat7.username>
+				<tomcat7.password></tomcat7.password>
+			</properties>
+		</profile>
+		
+		<!-- 阿里云主环境 -->
+		<profile>
+			<id>env-aliyun-master</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>net.alchim31.maven</groupId>
+						<artifactId>yuicompressor-maven-plugin</artifactId>
+						<version>1.5.1</version>
+						<executions>
+					        <execution>
+					        <phase>compile</phase>
+					            <goals>
+					                <goal>compress</goal>
+					            </goals>
+					        </execution>
+					    </executions>
+						
+						<configuration>
+							<!-- 读取js,css文件采用UTF-8编码 -->  
+		                    <encoding>UTF-8</encoding>  
+		                    <!-- 不显示js可能的错误 -->  
+		                    <jswarn>false</jswarn>
+		                    <!-- 出现警告是否报错 -->
+		                    <failOnWarning>false</failOnWarning>  
+		                    <!-- 若存在已压缩的文件，会先对比源文件是否有改动  有改动便压缩，无改动就不压缩 -->  
+		                    <force>false</force>  
+		                    <!-- 在指定的列号后插入新行 -->  
+		                    <linebreakpos>-1</linebreakpos>  
+		                    <!-- 压缩之前先执行聚合文件操作 -->  
+		                    <preProcessAggregates>true</preProcessAggregates>  
+		                    <!-- 压缩后保存文件后缀 无后缀 -->  
+		                    <nosuffix>true</nosuffix>  
+		                    <!-- 源目录，即需压缩的根目录 -->  
+		                    <sourceDirectory>src/main/webapp</sourceDirectory> 
+                    
+							<includes>
+								<include>js/**/*.js</include>
+								<include>**/*Ext.js</include>
+								<include>css/**/*.css</include>
+							</includes>
+							<excludes>
+								<exclude>**/**min.js</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+					
+					<plugin>
+						<!-- maven-war-plugin会自动把webapp目录下的文件复制到输出路径，导致压缩混淆后的js和css被重新覆盖
+						因此可以通过warSourceExcludes配置排除复制,的文件或路径 -->
+		                <groupId>org.apache.maven.plugins</groupId>
+		                <artifactId>maven-war-plugin</artifactId>
+		                <version>2.4</version>
+		                    <configuration>
+		                        <warSourceExcludes>js/**/*.js,**/*Ext.js,css/**/*.css</warSourceExcludes>
+		                    </configuration>
+		            </plugin>
+				</plugins>
+			</build>
+			
+			<properties>
+				<!-- 配置文件 -->
+				<env>aliyun-master</env>
+				
+				<!-- tomcat7-plugin -->
+				<tomcat7.path>/sosoapi-web</tomcat7.path>
+				<tomcat7.port></tomcat7.port>
+				<tomcat7.uriEncoding>UTF-8</tomcat7.uriEncoding>
+				<tomcat7.url></tomcat7.url>
+				<tomcat7.server>tomcat7</tomcat7.server>
+				<tomcat7.username></tomcat7.username>
+				<tomcat7.password></tomcat7.password>
+			</properties>
+		</profile>
+	</profiles>
+</project>

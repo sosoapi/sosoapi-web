@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.proj.dao.ProjectLogDao">
+	<insert id="add" parameterType="projectLog" useGeneratedKeys="true" keyProperty="id">
+		insert into t_proj_log
+			(
+				create_date,
+				modify_date,
+				proj_id,
+				user_id,
+				pub_date,
+				title,
+				content
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{projId},
+				#{userId},
+				#{pubDate},
+				#{title},
+				#{content}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="projectLog">
+		update t_proj_log
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="userId != null and '' != userId"> user_id = #{userId},</if>
+			<if test="title != null and '' != title"> title = #{title},</if>
+			<if test="content != null and '' != content"> content = #{content},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_proj_log
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="projectLog">
+		select
+			*
+		from
+			t_proj_log
+		where
+			id = #{id}
+	</select>
+	
+	<select id="listByProjId" resultType="map">
+		select
+			l.id as log_id,
+			l.proj_id,
+			l.pub_date,
+			l.title,
+			l.content,
+			d.nick_name
+		from
+			t_proj_log l
+		inner join
+			t_user_detail d
+		on
+			l.user_id = d.user_id
+		where
+			l.proj_id = #{projId}
+		order by
+			l.pub_date desc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countByProjId" resultType="int">
+		select
+			count(id)
+		from
+			t_proj_log
+		where
+			proj_id = #{projId}
+	</select>
+	
+	<delete id="delByLogId">
+		delete from
+			t_proj_log
+		where
+			id = #{logId}
+		and
+			proj_id = #{projId}
+	</delete>
+</mapper>

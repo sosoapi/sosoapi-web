@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.doc.dao.ModuleDao">
+	<insert id="add" parameterType="module" useGeneratedKeys="true" keyProperty="id">
+		insert into t_module
+			(
+				create_date,
+				modify_date,
+				doc_id,
+				code,
+				name,
+				description,
+				sort_weight
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{docId},
+				#{code},
+				#{name},
+				#{description},
+				#{sortWeight}
+			)	
+	</insert>
+	
+	<update id="updateByDocId" parameterType="module">
+		update t_module
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="code != null and '' != code"> code = #{code},</if>
+			<if test="name != null and '' != name"> name = #{name},</if>
+			<if test="true"> description = #{description},</if>
+			<if test="sortWeight != null"> sort_weight = #{sortWeight},</if>
+		</set>
+		where
+			id = #{id}
+		and
+			doc_id = #{docId}
+	</update>
+	
+	<delete id="deleteByDocId">
+		delete from
+			t_module
+		where
+			id = #{moduleId}
+		and
+			doc_id = #{docId}
+	</delete>
+	
+	<select id="getById" resultType="module">
+		select
+			*
+		from
+			t_module
+		where
+			id = #{id}
+	</select>
+	
+	<sql id="sqlForListByDocId">
+		from
+			t_module
+		where
+			doc_id = #{docId}
+		<if test="code != null and '' != code">
+		and
+			code like #{code}
+		</if>
+		
+		<if test="name != null and '' != name">
+		and
+			name like #{name}
+		</if>
+		
+		<if test="description != null and '' != description">
+		and
+			description like #{description}
+		</if>
+	</sql>
+	
+	<select id="listByDocId" resultType="module">
+		select
+			*
+		<include refid="sqlForListByDocId"/>
+		order by
+			sort_weight asc,create_date asc
+		<if test="pager != null">
+		limit
+			#{pager.start},#{pager.pageSize}
+		</if>
+	</select>
+	
+	<select id="countByDocId" resultType="int">
+		select
+			count(id)
+		<include refid="sqlForListByDocId"></include>
+	</select>
+</mapper>

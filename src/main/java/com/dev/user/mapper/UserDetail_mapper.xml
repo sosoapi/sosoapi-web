@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.user.dao.UserDetailDao">
+	<insert id="add" parameterType="userDetail" useGeneratedKeys="true" keyProperty="id">
+		insert into t_user_detail
+			(
+				create_date,
+				modify_date,
+				user_id,
+				address,
+				area_id,
+				birth,
+				country,
+				gender,
+				name,
+				nick_name,
+				zip_code,
+				head_url,
+				university
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{userId},
+				#{address},
+				#{areaId},
+				#{birth},
+				#{country},
+				#{gender},
+				#{name},
+				#{nickName},
+				#{zipCode},
+				#{headUrl},
+				#{university}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="userDetail">
+		update t_user_detail
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="userId != null and '' != userId"> user_id = #{userId},</if>
+			<if test="address != null and '' != address"> address = #{address},</if>
+			<if test="areaId != null and '' != areaId"> area_id = #{areaId},</if>
+			<if test="birth != null and '' != birth"> birth = #{birth},</if>
+			<if test="country != null and '' != country"> country = #{country},</if>
+			<if test="gender != null and '' != gender"> gender = #{gender},</if>
+			<if test="name != null and '' != name"> name = #{name},</if>
+			<if test="nickName != null and '' != nickName"> nick_name = #{nickName},</if>
+			<if test="zipCode != null and '' != zipCode"> zip_code = #{zipCode},</if>
+			<if test="headUrl != null and '' != headUrl"> head_url = #{headUrl},</if>
+			<if test="university != null and '' != university"> university = #{university},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_user_detail
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="userDetail">
+		select
+			*
+		from
+			t_user_detail
+		where
+			id = #{id}
+	</select>
+	
+	<select id="getByUserId" resultType="userDetail">
+		select
+			*
+		from
+			t_user_detail
+		where
+			user_id = #{userId}
+	</select>
+	
+	<select id="getDetailByUserId" resultType="map">
+		select
+			b.id as user_id,
+			b.email,
+			b.role,
+			b.valid,
+			b.locked,
+			b.create_date as regist_date,
+			d.nick_name,
+			d.head_url
+		from
+			t_user_basic b
+		inner join
+			t_user_detail d
+		on
+			b.id = d.user_id
+		where
+			b.id = #{userId}
+	</select>
+	
+	<sql id="sqlForListAll">
+		from
+			t_user_basic b
+		inner join
+			t_user_detail d
+		on
+			b.id = d.user_id
+		<where>
+			<if test="email != null and '' != email">
+			and
+				b.email like #{email}
+			</if>
+			<if test="nickName != null and '' != nickName">
+			and
+				d.nick_name like #{nickName}
+			</if>
+			<if test="valid != null">
+			and
+				b.valid = #{valid}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="listAll" resultType="map">
+		select
+			b.id as user_id,
+			b.email,
+			b.role,
+			b.valid,
+			b.locked,
+			b.create_date as regist_date,
+			d.nick_name,
+			d.head_url
+		<include refid="sqlForListAll"></include>
+		order by
+			b.create_date desc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countAll" resultType="int">
+		select
+			count(b.id)
+		<include refid="sqlForListAll"></include>
+	</select>
+</mapper>

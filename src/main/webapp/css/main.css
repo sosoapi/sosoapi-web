@@ -1,0 +1,95 @@
+.quick-btn {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 80px;
+  padding-top: 16px;
+  margin: 10px;
+  color: #444444;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+ 
+  -webkit-box-shadow: 0 0 0 1px #F8F8F8 inset, 0 0 0 1px #CCCCCC;
+          box-shadow: 0 0 0 1px #F8F8F8 inset, 0 0 0 1px #CCCCCC;
+}
+
+.quick-btn span {
+  display: block;
+}
+
+.quick-btn .label {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+}
+
+.quick-btn:hover {
+  color: #0053ff;
+  text-decoration: none;
+  
+}
+
+.quick-btn.small {
+  width: 40px;
+  height: 30px;
+  padding-top: 6px;
+}
+
+/* 重载*/
+/* 导航栏*/
+.breadcrumb {
+	margin-bottom:25px;
+}
+
+/* 通知展示 */
+.jGrowl.center {
+  top: 80px;
+  width: 50%;
+  left: 25%;
+}
+
+/* 只读*/
+.form-control[readonly] {
+	cursor:auto;
+	background-color: #eee;
+	opacity: 1;
+}
+
+/* 屏幕最小高度*/
+.cust-container {
+	min-height:750px;
+	margin-top:30px;
+}
+
+/* 距上边缘距离*/
+.margin-top {
+	margin-top:25px;
+}
+
+/* 操作相关，无实际样式 */
+/* datatable删除按钮样式 */
+.oper-del{
+	
+}
+
+/* 提示框初始化 */
+.cust-popover{
+	
+}
+
+/* 文本过长*/
+.cust-text-overflow{
+	text-overflow:ellipsis;
+}
+
+/* 自定义宽度*/
+ .container{
+	width:85%;
+} 
+
+/* 右键菜单图标颜色 */
+.context-color{
+	color:green;
+}
+

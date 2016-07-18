@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.doc.dao.InterParamDao">
+	<insert id="add" parameterType="interParam" useGeneratedKeys="true" keyProperty="id">
+		insert into t_inter_param
+			(
+				create_date,
+				modify_date,
+				doc_id,
+				inter_id,
+				code,
+				name,
+				description,
+				type,
+				format,
+				position,
+				required,
+				cust_schema,
+				ext_schema,
+				ref_schema_id,
+				def_value
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{docId},
+				#{interId},
+				#{code},
+				#{name},
+				#{description},
+				#{type},
+				#{format},
+				#{position},
+				#{required},
+				#{custSchema},
+				#{extSchema},
+				#{refSchemaId},
+				#{defValue}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="interParam">
+		update t_inter_param
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="code != null and '' != code"> code = #{code},</if>
+			<if test="name != null and '' != name"> name = #{name},</if>
+			<if test="description != null and '' != description"> description = #{description},</if>
+			<if test="type != null and '' != type"> type = #{type},</if>
+			<if test="format != null and '' != format"> format = #{format},</if>
+			<if test="position != null and '' != position"> position = #{position},</if>
+			<if test="required != null"> required = #{required},</if>
+			<if test="custSchema != null and '' != custSchema"> cust_schema = #{custSchema},</if>
+			<if test="extSchema != null and '' != extSchema"> ext_schema = #{extSchema},</if>
+			<if test="refSchemaId != null and '' != refSchemaId"> ref_schema_id = #{refSchemaId},</if>
+			<if test="defValue != null and '' != defValue"> def_value = #{defValue},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_inter_param
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="interParam">
+		select
+			*
+		from
+			t_inter_param
+		where
+			id = #{id}
+	</select>
+	
+	<select id="listAllByInterId" resultType="interParam">
+		select
+			*
+		from
+			t_inter_param
+		where
+			inter_id = #{interId}
+		and
+			doc_id = #{docId}
+	</select>
+	
+	<insert id="batchAdd" useGeneratedKeys="true" parameterType="java.util.List">
+		insert into t_inter_param 
+			(
+				create_date,
+				modify_date,
+				doc_id,
+				inter_id,
+				code,
+				name,
+				description,
+				type,
+				format,
+				position,
+				required,
+				cust_schema,
+				ext_schema,
+				ref_schema_id,
+				def_value
+			)   
+    	values  
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (	
+	        	#{item.createDate},
+				#{item.modifyDate},
+				#{item.docId},
+				#{item.interId},
+				#{item.code},
+				#{item.name},
+				#{item.description},
+				#{item.type},
+				#{item.format},
+				#{item.position},
+				#{item.required},
+				#{item.custSchema},
+				#{item.extSchema},
+				#{item.refSchemaId},
+				#{item.defValue}
+			)  
+	    </foreach>  
+	</insert>
+	
+	<delete id="deleteByDocIdAndInterId">
+		delete from
+			t_inter_param
+		where
+			inter_id = #{interId}
+		and
+			doc_id = #{docId}
+	</delete>
+	
+	<select id="listAllByDocId" resultType="interParam">
+		select
+			*
+		from
+			t_inter_param
+		where
+			doc_id = #{docId}
+		order by
+			id asc
+	</select>
+</mapper>

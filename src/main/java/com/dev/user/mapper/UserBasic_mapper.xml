@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.user.dao.UserBasicDao">
+	<insert id="add" parameterType="userBasic" useGeneratedKeys="true" keyProperty="id">
+		insert into t_user_basic
+			(
+				create_date,
+				modify_date,
+				phone,
+				email,
+				password,
+				valid,
+				role,
+				locked,
+				locked_date,
+				register_ip
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{phone},
+				#{email},
+				#{password},
+				#{valid},
+				#{role},
+				#{locked},
+				#{lockedDate},
+				#{registerIp}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="userBasic">
+		update t_user_basic
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="phone != null and '' != phone"> phone = #{phone},</if>
+			<if test="email != null and '' != email"> email = #{email},</if>
+			<if test="password != null and '' != password"> password = #{password},</if>
+			<if test="valid != null"> valid = #{valid},</if>
+			<if test="role != null and '' != role"> role = #{role},</if>
+			<if test="locked != null"> locked = #{locked},</if>
+			<if test="lockedDate != null and '' != lockedDate"> locked_date = #{lockedDate},</if>
+			<if test="registerIp != null and '' != registerIp"> register_ip = #{registerIp},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_user_basic
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="userBasic">
+		select
+			*
+		from
+			t_user_basic
+		where
+			id = #{id}
+	</select>
+	
+	<select id="getByEmail" resultType="userBasic">
+		select
+			*
+		from
+			t_user_basic
+		where
+			email = #{email}
+	</select>
+	
+	<select id="countTotalRegist" resultType="int">
+		select
+			count(id)
+		from
+			t_user_basic
+		where
+			valid = 1
+	</select>
+	
+	<select id="countDayRegist" resultType="int">
+		select
+			count(id)
+		from
+			t_user_basic
+		where
+			valid = 1
+		and
+		<![CDATA[
+			create_date > #{dayStart}
+		and
+			create_date <= #{dayEnd}
+		]]>
+	</select>
+	
+	<update id="unlockJob">
+		update
+			t_user_basic
+		set
+			locked = 0
+		where
+			locked = 1
+	</update>
+	
+	<select id="countByEmail" resultType="int">
+		select
+			count(id)
+		from
+			t_user_basic
+		where
+			email = #{email}
+		<if test="exceptId != null">
+		<![CDATA[ 
+		and
+			id <> #{exceptId}
+		]]>
+		</if>
+	</select>
+</mapper>

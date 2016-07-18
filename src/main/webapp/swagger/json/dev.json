@@ -1,0 +1,402 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "该demo主要用于汇集常见的接口编辑事例。\n<br/>\n接口测试过程中如果出现ajax跨域请求问题可参考\"常见问题->线下部署\"中的跨域请求相关资料。\n<br/>\n<br/>\n技术交流群:305629848",
+    "version" : "1.0.0",
+    "title" : "sosoapi_demo"
+  },
+  "host" : "www.sosoapi.com",
+  "basePath" : "/demo",
+  "tags" : [ {
+    "name" : "1.入门"
+  }, {
+    "name" : "2.进阶"
+  } ],
+  "schemes" : [ ],
+  "consumes" : [ ],
+  "produces" : [ ],
+  "paths" : {
+    "/user/complex/add.htm" : {
+      "post" : {
+        "tags" : [ "2.进阶" ],
+        "summary" : "新增用户(自定义参数)",
+        "description" : "新增用户(自定义参数)",
+        "schemes" : [ "http" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "userInfo",
+          "description" : "用户信息",
+          "required" : true,
+          "schema" : {
+            "type" : "cust",
+            "format" : "json",
+            "content" : "{\n\t\"email\": \"string,邮箱\",\n        \"nickName\": \"string,昵称\"\n}"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "默认响应",
+            "schema" : {
+              "type" : "object",
+              "format" : "",
+              "title" : "default",
+              "properties" : {
+                "userId" : {
+                  "type" : "integer",
+                  "format" : "int64",
+                  "description" : "用户id"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/complex/list.htm" : {
+      "get" : {
+        "tags" : [ "2.进阶" ],
+        "summary" : "查询用户列表(多层嵌套)",
+        "description" : "查询用户列表(多层嵌套)",
+        "schemes" : [ "http" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "default" : {
+            "description" : "默认响应",
+            "schema" : {
+              "type" : "object",
+              "format" : "",
+              "title" : "default",
+              "properties" : {
+                "data" : {
+                  "type" : "object",
+                  "format" : "",
+                  "description" : "响应信息",
+                  "title" : "data",
+                  "properties" : {
+                    "totalCount" : {
+                      "type" : "integer",
+                      "format" : "int32",
+                      "description" : "总记录数"
+                    },
+                    "list" : {
+                      "type" : "array",
+                      "format" : "",
+                      "description" : "用户列表",
+                      "items" : {
+                        "description" : "用户信息",
+                        "$ref" : "#/definitions/SimpleUserInfo"
+                      }
+                    }
+                  }
+                },
+                "errorCode" : {
+                  "type" : "string",
+                  "description" : "错误码"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/complex/{userId}/info.htm" : {
+      "get" : {
+        "tags" : [ "2.进阶" ],
+        "summary" : "获取用户详情(多层嵌套)",
+        "description" : "获取用户详情(多层嵌套)",
+        "schemes" : [ "http" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "用户id",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "默认响应",
+            "schema" : {
+              "type" : "object",
+              "format" : "",
+              "title" : "default",
+              "properties" : {
+                "addressList" : {
+                  "type" : "array",
+                  "format" : "",
+                  "description" : "地址列表",
+                  "items" : {
+                    "type" : "object",
+                    "format" : "",
+                    "description" : "地址信息",
+                    "title" : "address",
+                    "properties" : {
+                      "street" : {
+                        "type" : "string",
+                        "description" : "街道名称"
+                      },
+                      "city" : {
+                        "type" : "string",
+                        "description" : "城市名称"
+                      }
+                    }
+                  }
+                },
+                "nickName" : {
+                  "type" : "string",
+                  "description" : "昵称"
+                },
+                "age" : {
+                  "type" : "integer",
+                  "format" : "int32",
+                  "description" : "年龄"
+                },
+                "userId" : {
+                  "type" : "integer",
+                  "format" : "int64",
+                  "description" : "用户id"
+                }
+              }
+            }
+          },
+          "error" : {
+            "description" : "错误信息",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorCode"
+            }
+          },
+          "001" : {
+            "description" : "管理员",
+            "schema" : {
+              "type" : "object",
+              "format" : "",
+              "title" : "001",
+              "properties" : {
+                "admin" : {
+                  "description" : "管理员信息",
+                  "$ref" : "#/definitions/SimpleUserInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/simple/add.htm" : {
+      "post" : {
+        "tags" : [ "1.入门" ],
+        "summary" : "新增用户",
+        "description" : "新增用户信息",
+        "schemes" : [ "http" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "email",
+          "in" : "formData",
+          "description" : "邮箱",
+          "required" : true,
+          "type" : "string",
+          "format" : ""
+        }, {
+          "name" : "nickName",
+          "in" : "formData",
+          "description" : "昵称",
+          "required" : true,
+          "type" : "string",
+          "format" : ""
+        }, {
+          "name" : "age",
+          "in" : "formData",
+          "description" : "年龄",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "默认响应",
+            "schema" : {
+              "type" : "object",
+              "format" : "",
+              "title" : "default",
+              "properties" : {
+                "userId" : {
+                  "type" : "integer",
+                  "format" : "int64",
+                  "description" : "用户id"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "无法找到对应服务"
+          }
+        }
+      }
+    },
+    "/user/simple/list.htm" : {
+      "get" : {
+        "tags" : [ "1.入门" ],
+        "summary" : "查询用户列表",
+        "description" : "获取用户列表",
+        "schemes" : [ "http" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "default" : {
+            "description" : "默认响应",
+            "schema" : {
+              "type" : "array",
+              "format" : "",
+              "items" : {
+                "title" : "default",
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "description" : "用户邮箱"
+                  },
+                  "nickName" : {
+                    "type" : "string",
+                    "description" : "用户昵称"
+                  },
+                  "userId" : {
+                    "type" : "integer",
+                    "format" : "int64",
+                    "description" : "用户id"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/simple/{userId}/del.htm" : {
+      "delete" : {
+        "tags" : [ "1.入门" ],
+        "summary" : "删除用户",
+        "description" : "删除指定用户",
+        "schemes" : [ "http" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "用户id",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "默认响应",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorCode"
+            }
+          }
+        }
+      }
+    },
+    "/user/simple/{userId}/info.htm" : {
+      "get" : {
+        "tags" : [ "1.入门" ],
+        "summary" : "查询用户",
+        "description" : "查询用户信息",
+        "schemes" : [ "http" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "用户id",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "默认响应",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleUserInfo"
+            }
+          }
+        }
+      }
+    },
+    "/user/simple/{userId}/update.htm" : {
+      "post" : {
+        "tags" : [ "1.入门" ],
+        "summary" : "更新用户",
+        "description" : "更新用户信息",
+        "schemes" : [ "http" ],
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "用户id",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "nickName",
+          "in" : "query",
+          "description" : "昵称",
+          "required" : true,
+          "type" : "string",
+          "format" : ""
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "默认响应",
+            "schema" : {
+              "$ref" : "#/definitions/ErrorCode"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "SimpleUserInfo" : {
+      "type" : "object",
+      "properties" : {
+        "nickName" : {
+          "type" : "string",
+          "description" : "昵称"
+        },
+        "email" : {
+          "type" : "string",
+          "description" : "邮箱"
+        },
+        "age" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "年龄"
+        }
+      },
+      "description" : "简单用户信息"
+    },
+    "ErrorCode" : {
+      "type" : "object",
+      "properties" : {
+        "errorCode" : {
+          "type" : "string",
+          "description" : "错误编码"
+        },
+        "errorMsg" : {
+          "type" : "string",
+          "description" : "错误提示信息"
+        }
+      },
+      "description" : "错误码"
+    }
+  }
+}

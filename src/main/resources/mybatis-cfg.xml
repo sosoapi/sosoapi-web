@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+    	<!-- 项目相关 -->
+   		<typeAlias type="com.dev.proj.entity.Project" alias="project"/>
+   		<typeAlias type="com.dev.proj.entity.ProjectMember" alias="projectMember"/>
+   		<typeAlias type="com.dev.proj.entity.ProjectPrivilege" alias="projectPrivilege"/>
+   		<typeAlias type="com.dev.proj.entity.ProjectRole" alias="projectRole"/>
+   		<typeAlias type="com.dev.proj.entity.ProjectLog" alias="projectLog"/>
+   		
+   		<!-- 项目文档相关 -->
+   		<typeAlias type="com.dev.doc.entity.ApiDoc" alias="apiDoc"/>
+   		<typeAlias type="com.dev.doc.entity.Inter" alias="inter"/>
+   		<typeAlias type="com.dev.doc.entity.InterParam" alias="interParam"/>
+   		<typeAlias type="com.dev.doc.entity.InterResp" alias="interResp"/>
+   		<typeAlias type="com.dev.doc.entity.Module" alias="module"/>
+   		<typeAlias type="com.dev.doc.entity.RespSchema" alias="respSchema"/>
+   		
+   		<!-- 用户相关 -->
+   		<typeAlias type="com.dev.user.entity.UserBasic" alias="userBasic"/>
+   		<typeAlias type="com.dev.user.entity.UserExt" alias="userExt"/>
+   		<typeAlias type="com.dev.user.entity.UserDetail" alias="userDetail"/>
+   		<typeAlias type="com.dev.user.entity.UserLogin" alias="userLogin"/>
+   		<typeAlias type="com.dev.user.entity.UserToken" alias="userToken"/>
+   		<typeAlias type="com.dev.user.entity.Suggest" alias="suggest"/>
+   		<typeAlias type="com.dev.user.entity.UserMsg" alias="userMsg"/>
+   		
+   		<!-- 管理员相关 -->
+   		<typeAlias type="com.dev.admin.entity.SysMsg" alias="sysMsg"/>
+   		<typeAlias type="com.dev.admin.entity.UserCube" alias="userCube"/>
+   		
+    </typeAliases>
+</configuration>

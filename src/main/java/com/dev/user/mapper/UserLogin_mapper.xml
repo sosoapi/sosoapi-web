@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.user.dao.UserLoginDao">
+	<insert id="add" parameterType="userLogin" useGeneratedKeys="true" keyProperty="id">
+		insert into t_user_login
+			(
+				create_date,
+				modify_date,
+				login_date,
+				login_failure_count,
+				login_count,
+				login_ip,
+				user_id,
+				login_type,
+				login_status,
+				auth_code
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{loginDate},
+				#{loginFailureCount},
+				#{loginCount},
+				#{loginIp},
+				#{userId},
+				#{loginType},
+				#{loginStatus},
+				#{authCode}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="userLogin">
+		update t_user_login
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="loginDate != null and '' != loginDate"> login_date = #{loginDate},</if>
+			<if test="loginFailureCount != null"> login_failure_count = #{loginFailureCount},</if>
+			<if test="loginCount != null"> login_count = #{loginCount},</if>
+			<if test="loginIp != null and '' != loginIp"> login_ip = #{loginIp},</if>
+			<if test="loginType != null and '' != loginType"> login_type = #{loginType},</if>
+			<if test="loginStatus != null and '' != loginStatus"> login_status = #{loginStatus},</if>
+			<if test="authCode != null and '' != authCode"> auth_code = #{authCode},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<update id="resetLoginFailCount">
+		update
+			t_user_login
+		set
+			login_failure_count = 0
+		where
+			login_failure_count > 0
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_user_login
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="userLogin">
+		select
+			*
+		from
+			t_user_login
+		where
+			id = #{id}
+	</select>
+	
+	<select id="getByUserId" resultType="userLogin">
+		select
+			*
+		from
+			t_user_login
+		where
+			user_id = #{userId}
+	</select>
+	
+	<select id="countDayLogin" resultType="int">
+		select
+			count(id)
+		from
+			t_user_login
+		where
+		<![CDATA[
+			login_date > #{dayStart}
+		and
+			login_date <= #{dayEnd}
+		]]>
+	</select>
+	
+	<select id="countDayOldLogin" resultType="int">
+		select
+			count(id)
+		from
+			t_user_login
+		where
+		<![CDATA[
+			login_date > #{dayStart}
+		and
+			login_date <= #{dayEnd}
+		and
+			create_date < #{limitDate}
+		]]>
+	</select>
+	
+	<select id="countOnline" resultType="int">
+		select 
+			count(id)
+		from
+			t_user_login
+		where
+			login_status = 'online'
+	</select>
+</mapper>

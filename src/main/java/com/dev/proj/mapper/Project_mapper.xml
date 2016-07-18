@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.proj.dao.ProjectDao">
+	<insert id="add" parameterType="project" useGeneratedKeys="true" keyProperty="id">
+		insert into t_proj
+			(
+				create_date,
+				modify_date,
+				user_id,
+				code,
+				name,
+				description,
+				status
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{userId},
+				#{code},
+				#{name},
+				#{description},
+				#{status}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="project">
+		update t_proj
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="userId != null and '' != userId"> user_id = #{userId},</if>
+			<if test="code != null and '' != code"> code = #{code},</if>
+			<if test="name != null and '' != name"> name = #{name},</if>
+			<if test="true"> description = #{description},</if>
+			<if test="status != null and '' != status"> status = #{status},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_proj
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="project">
+		select
+			*
+		from
+			t_proj
+		where
+			id = #{id}
+	</select>
+	
+	<sql id="sqlForListByUserId">
+		from
+			t_proj_mem pm
+		inner join
+			t_proj p
+		on
+			pm.proj_id = p.id
+		where
+			pm.user_id = #{userId}
+		<if test="code != null and '' != code">
+		and
+			p.code like #{code}
+		</if>
+		<if test="name != null and '' != name">
+		and
+			p.name like #{name}
+		</if>
+		<if test="status != null">
+		and
+			p.status = #{status}
+		</if>
+	</sql>
+	
+	<select id="listByUserId" resultType="map">
+		select
+			p.id as proj_id,
+			p.code,
+			p.name,
+			p.status,
+			p.create_date,
+			pm.role
+		<include refid="sqlForListByUserId"></include>
+		order by
+			p.create_date desc,p.code asc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countByUserId" resultType="int">
+		select
+			count(p.id)
+		<include refid="sqlForListByUserId"></include>
+	</select>
+	
+	<sql id="sqlForListAll">
+		from
+			t_proj p
+		inner join
+			t_user_detail d
+		on
+			p.user_id = d.user_id
+		left join
+			(select proj_id,count(id) as mem_count from t_proj_mem group by proj_id) c
+		on
+			p.id = c.proj_id
+		<where>
+			<if test="code != null and '' != code">
+			and
+				p.code like #{code}
+			</if>
+			<if test="nickName != null and '' != nickName">
+			and
+				d.nick_name like #{nickName}
+			</if>
+			<if test="status != null and '' != status">
+			and
+				p.status = #{status}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="listAll" resultType="map">
+		select
+			p.id as proj_id,
+			p.code,
+			p.name,
+			p.status,
+			p.create_date,
+			d.nick_name,
+			ifnull(c.mem_count,0) as mem_count
+		<include refid="sqlForListAll"></include>
+		order by
+			p.create_date desc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countAll" resultType="int">
+		select
+			count(p.id)
+		<include refid="sqlForListAll"></include>
+	</select>
+	
+	<select id="countTotal" resultType="int">
+		select
+			count(id)
+		from
+			t_proj
+	</select>
+	
+	<select id="countDay" resultType="int">
+		select
+			count(id)
+		from
+			t_proj
+		where
+		<![CDATA[
+			create_date > #{dayStart}
+		and
+			create_date <= #{dayEnd}
+		]]>
+	</select>
+</mapper>

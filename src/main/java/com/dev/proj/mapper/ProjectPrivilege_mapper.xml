@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.proj.dao.ProjectPrivilegeDao">
+	<insert id="add" parameterType="projectPrivilege" useGeneratedKeys="true" keyProperty="id">
+		insert into t_proj_privilege
+			(
+				create_date,
+				modify_date,
+				code,
+				name,
+				description
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{code},
+				#{name},
+				#{description}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="projectPrivilege">
+		update t_proj_privilege
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="code != null and '' != code"> code = #{code},</if>
+			<if test="name != null and '' != name"> name = #{name},</if>
+			<if test="description != null and '' != description"> description = #{description},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_proj_privilege
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="projectPrivilege">
+		select
+			*
+		from
+			t_proj_privilege
+		where
+			id = #{id}
+	</select>
+</mapper>

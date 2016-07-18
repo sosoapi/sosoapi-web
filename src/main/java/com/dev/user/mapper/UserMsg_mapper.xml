@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.user.dao.UserMsgDao">
+	<insert id="add" parameterType="userMsg" useGeneratedKeys="true" keyProperty="id">
+		insert into t_user_msg
+			(
+				create_date,
+				modify_date,
+				sys,
+				sys_msg_id,
+				sender_id,
+				receiver_id,
+				pub_date,
+				title,
+				content,
+				msg_type,
+				deal,
+				deal_date
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{sys},
+				#{sysMsgId},
+				#{senderId},
+				#{receiverId},
+				#{pubDate},
+				#{title},
+				#{content},
+				#{msgType},
+				#{deal},
+				#{dealDate}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="userMsg">
+		update t_user_msg
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="sys != null"> sys = #{sys},</if>
+			<if test="sysMsgId != null and '' != sysMsgId"> sys_msg_id = #{sysMsgId},</if>
+			<if test="senderId != null and '' != senderId"> sender_id = #{senderId},</if>
+			<if test="receiverId != null and '' != receiverId"> receiver_id = #{receiverId},</if>
+			<if test="pubDate != null and '' != pubDate"> pub_date = #{pubDate},</if>
+			<if test="title != null and '' != title"> title = #{title},</if>
+			<if test="content != null and '' != content"> content = #{content},</if>
+			<if test="msgType != null and '' != msgType"> msg_type = #{msgType},</if>
+			<if test="deal != null"> deal = #{deal},</if>
+			<if test="dealDate != null and '' != dealDate"> deal_date = #{dealDate},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_user_msg
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="userMsg">
+		select
+			*
+		from
+			t_user_msg
+		where
+			id = #{id}
+	</select>
+	
+	<sql id="sqlForListByUserId">
+		from
+			t_user_msg
+		<where>
+			<if test="true">
+			and
+				receiver_id = #{userId} 
+			</if>
+			<if test="title != null and '' != title">
+			and
+				title like #{title}
+			</if>
+			
+			<if test="msgType != null and '' != msgType">
+			and
+				msg_type = #{msgType}
+			</if>
+			
+			<if test="sys != null">
+			and
+				sys = #{sys}
+			</if>
+			
+			<if test="deal != null">
+			and
+				deal = #{deal}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="listByUserId" resultType="userMsg">
+		select
+			*
+		<include refid="sqlForListByUserId"></include>
+		order by
+			create_date desc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countByUserId" resultType="int">
+		select
+			count(id)
+		<include refid="sqlForListByUserId"></include>
+	</select>
+	
+	<insert id="fetchSysMsg">
+		insert into t_user_msg
+		(
+			create_date,
+			modify_date,
+			sys,
+			sys_msg_id,
+			sender_id,
+			receiver_id,
+			pub_date,
+			title,
+			content,
+			msg_type,
+			deal
+		)
+		select
+			create_date,
+			modify_date,
+			1,
+			id,
+			user_id,
+			#{userId},
+			pub_date,
+			title,
+			content,
+			msg_type,
+			0
+		from
+			t_sys_msg
+		where
+			user_role = #{userRole}
+		and
+			msg_status = 'pub'
+		<if test="lastFetchDate != null">
+		and
+			pub_date > #{lastFetchDate}
+		</if>
+	</insert>
+	
+	<select id="countUnread" resultType="int">
+		select
+			count(id)
+		from
+			t_user_msg
+		where
+			receiver_id = #{userId}
+		and
+			deal = 0
+	</select>
+	
+	<update id="setReadByUserId">
+		update 
+			t_user_msg
+		set
+			deal = 1
+		where
+			id = ${msgId}
+		and
+			receiver_id = #{userId}
+	</update>
+	
+	<delete id="delByUserId">
+		delete from
+			t_user_msg
+		where
+			id = ${msgId}
+		and
+			receiver_id = #{userId}
+	</delete>
+</mapper>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.proj.dao.ProjectMemberDao">
+	<insert id="add" parameterType="projectMember" useGeneratedKeys="true" keyProperty="id">
+		insert into t_proj_mem
+			(
+				create_date,
+				modify_date,
+				proj_id,
+				user_id,
+				role,
+				proj_role_id
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{projId},
+				#{userId},
+				#{role},
+				#{projRoleId}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="projectMember">
+		update t_proj_mem
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="projId != null and '' != projId"> proj_id = #{projId},</if>
+			<if test="userId != null and '' != userId"> user_id = #{userId},</if>
+			<if test="role != null and '' != role"> role = #{role},</if>
+			<if test="projRoleId != null and '' != projRoleId"> proj_role_id = #{projRoleId},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<update id="updateRole">
+		update 
+			t_proj_mem
+		set
+			role = #{role}
+		where
+			proj_id = #{projId}
+		and
+			user_id = #{userId}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_proj_mem
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="projectMember">
+		select
+			*
+		from
+			t_proj_mem
+		where
+			id = #{id}
+	</select>
+	
+	<select id="countRecord" resultType="int">
+		select
+			count(id)
+		from
+			t_proj_mem
+		where
+			user_id = #{userId}
+		and
+			proj_id = #{projId}
+	</select>
+	
+	<sql id="sqlForListByProjId">
+		from
+			t_proj_mem pm
+		inner join
+			t_user_basic u
+		on
+			pm.user_id = u.id
+		inner join
+			t_user_detail d
+		on
+			u.id = d.user_id
+		where
+			pm.proj_id = #{projId}
+		<if test="nickName != null and '' != nickName">
+		and
+			d.nick_name like #{nickName}
+		</if>
+		
+		<if test="email != null and '' != email">
+		and
+			u.email like #{email}
+		</if>
+		
+		<if test="role != null and '' != role">
+		and
+			pm.role = #{role}
+		</if>
+	</sql>
+	
+	<select id="listByProjId" resultType="map">
+		select
+			u.id as user_id,
+			u.email,
+			d.nick_name,
+			pm.role,
+			pm.create_date
+		<include refid="sqlForListByProjId"></include>
+		order by
+			pm.create_date desc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countByProjId" resultType="int">
+		select
+			count(pm.id)
+		<include refid="sqlForListByProjId"></include>
+	</select>
+	
+	<select id="getByUserIdAndProjId" resultType="map">
+		select
+			u.id as user_id,
+			u.email,
+			d.nick_name,
+			pm.role,
+			pm.create_date
+		from
+			t_proj_mem pm
+		inner join
+			t_user_basic u
+		on
+			pm.user_id = u.id
+		inner join
+			t_user_detail d
+		on
+			u.id = d.user_id
+		where
+			pm.proj_id = #{projId}
+		and
+			pm.user_id = #{userId}
+	</select>
+	
+	<select id="getRole" resultType="string">
+		select
+			role
+		from
+			t_proj_mem
+		where
+			user_id = #{userId}
+		and
+			proj_id = #{projId}
+	</select>
+	
+	<delete id="delByUserIdAndProjId">
+		delete from
+			t_proj_mem
+		where
+			user_id = #{userId}
+		and
+			proj_id = #{projId}
+	</delete>
+	
+	<select id="listAuthProjectInfo" resultType="map">
+		select
+			pm.proj_id,
+			pm.role,
+			d.id as doc_id
+		from
+			t_proj_mem pm
+		inner join
+			t_proj p
+		on
+			pm.proj_id = p.id
+		inner join
+			t_api_doc d
+		on
+			p.id = d.proj_id
+		inner join
+			t_user_basic b
+		on
+			pm.user_id = b.id
+		where
+			pm.user_id = #{userId}
+		order by
+			p.code asc
+	</select>
+	
+	<select id="listAdmin" resultType="long">
+		select
+			user_id
+		from
+			t_proj_mem
+		where
+			proj_id = #{projId}
+		and
+			role = 'admin'
+	</select>
+	
+	<select id="listEmail" resultType="string">
+		select
+			b.email
+		from
+			t_proj_mem pm
+		inner join
+			t_user_basic b
+		on
+			pm.user_id = b.id
+		where
+			pm.proj_id = #{projId}
+		<if test="role != null">
+		and
+			pm.role = #{role}
+		</if>
+	</select>
+	
+	<sql id="sqlForListForAdd">
+		from
+			t_user_basic b
+		inner join
+			t_user_detail d
+		on
+			b.id = d.user_id
+		inner join
+			(
+				select
+					m1.user_id
+				from 
+					t_proj_mem m1
+				inner join
+					t_proj_mem m2
+				on
+					(
+						m1.proj_id = m2.proj_id 
+					and 
+						m2.user_id = #{userId} 
+					<![CDATA[ and m2.proj_id <> 1 ]]>
+					)	
+				where 
+					<![CDATA[ m1.user_id <> #{userId} ]]>
+				group by 
+					m1.user_id
+			) t1
+		on 
+			d.user_id = t1.user_id
+		left join
+			t_proj_mem m
+		on
+			(t1.user_id = m.user_id and m.proj_id = #{projId})
+		where
+			m.user_id is null
+	</sql>
+	
+	<select id="listForAdd" resultType="map">
+		select
+			d.user_id,
+		  	d.nick_name,
+		  	b.email
+		<include refid="sqlForListForAdd"></include>
+		order by
+			d.nick_name asc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countForAdd" resultType="int">
+		select
+			count(d.user_id)
+		<include refid="sqlForListForAdd"></include>
+	</select>
+</mapper>

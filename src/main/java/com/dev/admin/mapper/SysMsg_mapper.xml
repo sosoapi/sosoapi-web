@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.admin.dao.SysMsgDao">
+	<insert id="add" parameterType="sysMsg" useGeneratedKeys="true" keyProperty="id">
+		insert into t_sys_msg
+			(
+				create_date,
+				modify_date,
+				user_id,
+				pub_date,
+				title,
+				content,
+				cancel,
+				cancel_date,
+				msg_type,
+				msg_status,
+				user_role
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{userId},
+				#{pubDate},
+				#{title},
+				#{content},
+				#{cancel},
+				#{cancelDate},
+				#{msgType},
+				#{msgStatus},
+				#{userRole}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="sysMsg">
+		update t_sys_msg
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="pubDate != null and '' != pubDate"> pub_date = #{pubDate},</if>
+			<if test="title != null and '' != title"> title = #{title},</if>
+			<if test="content != null and '' != content"> content = #{content},</if>
+			<if test="cancel != null"> cancel = #{cancel},</if>
+			<if test="cancelDate != null and '' != cancelDate"> cancel_date = #{cancelDate},</if>
+			<if test="msgType != null and '' != msgType"> msg_type = #{msgType},</if>
+			<if test="msgStatus != null and '' != msgStatus"> msg_status = #{msgStatus},</if>
+			<if test="userRole != null and '' != userRole"> user_role = #{userRole},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_sys_msg
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="sysMsg">
+		select
+			*
+		from
+			t_sys_msg
+		where
+			id = #{id}
+	</select>
+	
+	<sql id="sqlForListAll">
+		from
+			t_sys_msg
+		<where>
+			<if test="title != null and '' != title">
+			and
+				title like #{title}
+			</if>
+			<if test="msgType != null and '' != msgType">
+			and
+				msg_type = #{msgType}
+			</if>
+			<if test="userRole != null and '' != userRole">
+			and
+				user_role = #{userRole}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="listAll" resultType="sysMsg">
+		select
+			*
+		<include refid="sqlForListAll"></include>
+		order by
+			create_date desc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countAll" resultType="int">
+		select
+			count(id)
+		<include refid="sqlForListAll"></include>
+	</select>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.doc.dao.RespSchemaDao">
+	<insert id="add" parameterType="respSchema" useGeneratedKeys="true" keyProperty="id">
+		insert into t_resp_schema
+			(
+				create_date,
+				modify_date,
+				doc_id,
+				module_id,
+				code,
+				name,
+				description,
+				cust_schema,
+				type,
+				ref_schema_id
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{docId},
+				#{moduleId},
+				#{code},
+				#{name},
+				#{description},
+				#{custSchema},
+				#{type},
+				#{refSchemaId}
+			)	
+	</insert>
+	
+	<update id="updateByDocId" parameterType="respSchema">
+		update t_resp_schema
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="moduleId != null and '' != moduleId"> module_id = #{moduleId},</if>
+			<if test="code != null and '' != code"> code = #{code},</if>
+			<if test="name != null and '' != name"> name = #{name},</if>
+			<if test="description != null and '' != description"> description = #{description},</if>
+			<if test="custSchema != null and '' != custSchema"> cust_schema = #{custSchema},</if>
+			<if test="type != null and '' != type"> type = #{type},</if>
+			<if test="refSchemaId != null and '' != refSchemaId"> ref_schema_id = #{refSchemaId},</if>
+		</set>
+		where
+			id = #{id}
+		and
+			doc_id = ${docId}
+	</update>
+	
+	<delete id="deleteByDocId">
+		delete from
+			t_resp_schema
+		where
+			id = #{schemaId}
+		and
+			doc_id = #{docId}
+	</delete>
+	
+	<select id="getById" resultType="respSchema">
+		select
+			*
+		from
+			t_resp_schema
+		where
+			id = #{id}
+	</select>
+	
+	<select id="getByDocId" resultType="respSchema">
+		select
+			*
+		from
+			t_resp_schema
+		where
+			id = #{schemaId}
+		and
+			doc_id = #{docId}
+	</select>
+	
+	<sql id="sqlForListByDocId">
+		from
+			t_resp_schema
+		where
+			doc_id = #{docId}
+		<if test="moduleId != null">
+		and
+			module_id = #{moduleId}
+		</if>
+		
+		<if test="code != null and '' != code">
+		and
+			code like #{code}
+		</if>
+		
+		<if test="name != null and '' != name">
+		and
+			name like #{name}
+		</if>
+		
+		<if test="description != null and '' != description">
+		and
+			description like #{description}
+		</if>
+	</sql>
+	
+	<select id="listByDocId" resultType="respSchema">
+		select
+			*
+		<include refid="sqlForListByDocId"></include>
+		order by
+			create_date desc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countByDocId" resultType="int">
+		select
+			count(id)
+		<include refid="sqlForListByDocId"></include>
+	</select>
+	
+	<select id="listAllByDocId" resultType="respSchema">
+		select
+			*
+		from
+			t_resp_schema
+		where
+			doc_id = #{docId}
+	</select>
+</mapper>

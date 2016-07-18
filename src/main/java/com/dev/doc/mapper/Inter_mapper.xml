@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.doc.dao.InterDao">
+	<insert id="add" parameterType="inter" useGeneratedKeys="true" keyProperty="id">
+		insert into t_inter
+			(
+				create_date,
+				modify_date,
+				doc_id,
+				module_id,
+				name,
+				path,
+				method,
+				scheme,
+				summary,
+				description,
+				consume,
+				produce,
+				deprecated,
+				sort_weight
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{docId},
+				#{moduleId},
+				#{name},
+				#{path},
+				#{method},
+				#{scheme},
+				#{summary},
+				#{description},
+				#{consume},
+				#{produce},
+				#{deprecated},
+				#{sortWeight}
+			)	
+	</insert>
+	
+	<update id="updateByDocId" parameterType="inter">
+		update t_inter
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="moduleId != null and '' != moduleId"> module_id = #{moduleId},</if>
+			<if test="name != null and '' != name"> name = #{name},</if>
+			<if test="path != null and '' != path"> path = #{path},</if>
+			<if test="method != null and '' != method"> method = #{method},</if>
+			<if test="scheme != null and '' != scheme"> scheme = #{scheme},</if>
+			<if test="summary != null and '' != summary"> summary = #{summary},</if>
+			<if test="true"> description = #{description},</if>
+			<if test="consume != null and '' != consume"> consume = #{consume},</if>
+			<if test="produce != null and '' != produce"> produce = #{produce},</if>
+			<if test="deprecated != null"> deprecated = #{deprecated},</if>
+			<if test="sortWeight != null"> sort_weight = #{sortWeight},</if>
+		</set>
+		where
+			id = #{id}
+		and
+			doc_id = #{docId}
+	</update>
+	
+	<delete id="deleteByDocId">
+		delete from
+			t_inter
+		where
+			id = #{interId}
+		and
+			doc_id = #{docId}
+	</delete>
+	
+	<select id="getById" resultType="inter">
+		select
+			*
+		from
+			t_inter
+		where
+			id = #{id}
+	</select>
+	
+	<select id="getDetailByDocId" resultType="map">
+		select
+			i.*,
+			m.id as module_id,
+			m.name as module_name
+		from
+			t_inter i
+		left join
+			t_module m
+		on
+			i.module_id = m.id
+		where
+			i.id = #{interId}
+		and
+			i.doc_id = #{docId}
+	</select>
+	
+	<sql id="sqlForListByDocId">
+		from
+			t_inter i
+		left join
+			t_module m
+		on
+			i.module_id = m.id
+		where
+			i.doc_id = #{docId}
+		<if test="moduleId != null">
+		and
+			i.module_id = #{moduleId}
+		</if>
+		
+		<if test="description != null and '' != description">
+		and
+			i.description like #{description}
+		</if>
+		
+		<if test="name != null and '' != name">
+		and
+			i.name like #{name}
+		</if>
+	</sql>
+	
+	<select id="listByDocId" resultType="inter">
+		select
+			i.*
+		<include refid="sqlForListByDocId"></include>
+		order by
+			m.sort_weight asc,i.sort_weight asc,create_date asc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="countByDocId" resultType="int">
+		select
+			count(i.id)
+		<include refid="sqlForListByDocId"></include>
+	</select>
+	
+	<select id="listAllByDocId" resultType="inter">
+		select
+			i.*
+		from
+			t_inter i
+		left join
+			t_module m
+		on
+			i.module_id = m.id
+		where
+			i.doc_id = #{docId}
+		order by
+			m.sort_weight asc,i.sort_weight asc,create_date asc
+	</select>
+	
+	<select id="getByPathAndMethod" resultType="inter">
+		select
+			*
+		from
+			t_inter
+		where
+			doc_id = #{docId}
+		and
+			path = #{path}
+		and
+			method = #{method}
+	</select>
+	
+	<select id="getByDocId" resultType="inter">
+		select
+			*
+		from
+			t_inter
+		where
+			id = #{interId}
+		and
+			doc_id = #{docId}
+	</select>
+</mapper>

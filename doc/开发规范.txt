@@ -1,0 +1,9 @@
+开发规范
+1、ajax增删改查
+  /json/add.htm,/json/update.htm,/json/del.htm,/json/info.htm,/json/list.htm
+  
+2、定时任务服务以Job结尾
+
+3、jquery submit表单时，如果有通过bootstrapValidator进行校验，则需要将提交表单type设置为"button",
+      通过bootstrapValidator的defaultSubmit进行提交，无法通过jquery.submit进行提交。
+      

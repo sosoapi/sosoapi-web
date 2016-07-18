@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.user.dao.UserTokenDao">
+	<insert id="add" parameterType="userToken" useGeneratedKeys="true" keyProperty="id">
+		insert into t_user_token
+			(
+				create_date,
+				modify_date,
+				user_id,
+				login_ip,
+				token,
+				expire_date
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{userId},
+				#{loginIp},
+				#{token},
+				#{expireDate}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="userToken">
+		update t_user_token
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="loginIp != null and '' != loginIp"> login_ip = #{loginIp},</if>
+			<if test="true"> token = #{token},</if>
+			<if test="expireDate != null and '' != expireDate"> expire_date = #{expireDate},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_user_token
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="userToken">
+		select
+			*
+		from
+			t_user_token
+		where
+			id = #{id}
+	</select>
+	
+	<select id="getByToken" resultType="userToken">
+		select
+			*
+		from
+			t_user_token
+		where
+			token = #{token}
+	</select>
+	
+	<select id="getByUserId" resultType="userToken">
+		select
+			*
+		from
+			t_user_token
+		where
+			user_id = #{userId}
+	</select>
+</mapper>

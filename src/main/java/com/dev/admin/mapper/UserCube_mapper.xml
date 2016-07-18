@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.admin.dao.UserCubeDao">
+	<insert id="add" parameterType="userCube" useGeneratedKeys="true" keyProperty="id">
+		insert into t_user_cube
+			(
+				create_date,
+				modify_date,
+				total_regist_count,
+				day_regist_count,
+				day_login_count,
+				day_old_login_count,
+				total_proj_count,
+				day_proj_count
+			)
+		values
+			(
+				#{createDate},
+				#{modifyDate},
+				#{totalRegistCount},
+				#{dayRegistCount},
+				#{dayLoginCount},
+				#{dayOldLoginCount},
+				#{totalProjCount},
+				#{dayProjCount}
+			)	
+	</insert>
+	
+	<update id="update" parameterType="userCube">
+		update t_user_cube
+		<set>
+			<if test="modifyDate != null and '' != modifyDate"> modify_date = #{modifyDate},</if>
+			<if test="totalRegistCount != null"> total_regist_count = #{totalRegistCount},</if>
+			<if test="dayRegistCount != null"> day_regist_count = #{dayRegistCount},</if>
+			<if test="dayLoginCount != null"> day_login_count = #{dayLoginCount},</if>
+			<if test="dayOldLoginCount != null"> day_old_login_count = #{dayOldLoginCount},</if>
+			<if test="totalProjCount != null"> total_proj_count = #{totalProjCount},</if>
+			<if test="dayProjCount != null"> day_proj_count = #{dayProjCount},</if>
+		</set>
+		where
+			id = #{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		delete from
+			t_user_cube
+		where
+			id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="userCube">
+		select
+			*
+		from
+			t_user_cube
+		where
+			id = #{id}
+	</select>
+	
+	<select id="list" resultType="userCube">
+		select
+			*
+		from
+			t_user_cube
+		order by
+			create_date desc
+		limit
+			#{pager.start},#{pager.pageSize}
+	</select>
+	
+	<select id="count" resultType="int">
+		select
+			count(id)
+		from
+			t_user_cube
+	</select>
+</mapper>
