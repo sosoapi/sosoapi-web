@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dev.base.constant.AppConstants;
 import com.dev.base.constant.CfgConstants;
 import com.dev.base.constant.MailConstants;
 import com.dev.base.enums.LoginStatus;
@@ -186,7 +187,7 @@ public class LoginServiceImpl implements LoginService{
 		ValidateUtils.notNull(basic, ErrorCode.LOGIN_001);
 		
 		UserDetail detail = userDetailService.getByUserId(basic.getId());
-		String code = CryptUtil.encryptAES(email);
+		String code = CryptUtil.encryptAES(email,AppConstants.DEFAULT_SECRET_KEY);
 		Map<String,Object> model = MapUtils.newMap();
 		model.put("nickName", detail.getNickName());
 		model.put("email", email);

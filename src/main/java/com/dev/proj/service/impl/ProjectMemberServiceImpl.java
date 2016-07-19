@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import com.dev.base.constant.AppConstants;
 import com.dev.base.constant.CfgConstants;
 import com.dev.base.constant.MailConstants;
 import com.dev.base.enums.Role;
@@ -107,7 +108,7 @@ public class ProjectMemberServiceImpl extends BaseMybatisServiceImpl<ProjectMemb
 		inviteInfo.put("projId", projId);
 		inviteInfo.put("invitedEmail", invitedEmail);
 		
-		String code = CryptUtil.encryptAES(JsonUtils.toJson(inviteInfo));
+		String code = CryptUtil.encryptAES(JsonUtils.toJson(inviteInfo),AppConstants.DEFAULT_SECRET_KEY);
 		UserDetail detail = userDetailService.getByUserId(userId);
 		Project project = projectService.getById(projId);
 		Map<String, Object> model = MapUtils.newMap();

@@ -26,4 +26,11 @@ public class AppConstants {
 	 * nginx配置文件中的的用户真实ip变量名
 	 */
 	public final static String NGINX_REMOTE_ADDR = "nginx_remote_addr";
+	
+	/**
+	 * 默认密钥
+	 */
+	public static byte[] DEFAULT_SECRET_KEY = { 65, 35, -28, -74, -18, -102,
+												-11, 92, 54, 84, 50, 18,
+												-16, 18, -11, -48 };
 }

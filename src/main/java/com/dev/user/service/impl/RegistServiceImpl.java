@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dev.base.constant.AppConstants;
 import com.dev.base.constant.CfgConstants;
 import com.dev.base.constant.MailConstants;
 import com.dev.base.enums.LoginType;
@@ -66,7 +67,7 @@ public class RegistServiceImpl implements RegistService{
 	
 	//处理邮件发送
 	private void sendEmail(String nickName,String registEmail){
-		String code = CryptUtil.encryptAES(registEmail);
+		String code = CryptUtil.encryptAES(registEmail,AppConstants.DEFAULT_SECRET_KEY);
 		
 		Map<String,Object> model = MapUtils.newMap();
 		model.put("nickName", nickName);

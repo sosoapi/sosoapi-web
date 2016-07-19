@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dev.base.constant.AppConstants;
 import com.dev.base.constant.CfgConstants;
 import com.dev.base.constant.MailConstants;
 import com.dev.base.exception.code.ErrorCode;
@@ -79,7 +80,7 @@ public class UserBasicServiceImpl extends BaseMybatisServiceImpl<UserBasic,Long,
 		Map<String, Object> info = MapUtils.newMap();
 		info.put("userId", userId);
 		info.put("email", email);
-		String code = CryptUtil.encryptAES(JsonUtils.toJson(info));
+		String code = CryptUtil.encryptAES(JsonUtils.toJson(info),AppConstants.DEFAULT_SECRET_KEY);
 		
 		UserDetail detail = userDetailService.getByUserId(userId);
 		
