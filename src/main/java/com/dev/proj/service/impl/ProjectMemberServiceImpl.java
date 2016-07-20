@@ -123,7 +123,7 @@ public class ProjectMemberServiceImpl extends BaseMybatisServiceImpl<ProjectMemb
 
 	@Override
 	public Long accept(Long userId, String code) {
-		Map<String, Object> inviteInfo = JsonUtils.toObject(CryptUtil.decryptAES(code), HashMap.class);
+		Map<String, Object> inviteInfo = JsonUtils.toObject(CryptUtil.decryptAES(code,AppConstants.DEFAULT_SECRET_KEY), HashMap.class);
 		UserBasic userBasic = userBasicService.getById(userId);
 		
 		String invitedEmail = (String)inviteInfo.get("invitedEmail");

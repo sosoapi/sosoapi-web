@@ -117,7 +117,7 @@ public class RegistServiceImpl implements RegistService{
 
 	@Override
 	public void activeByEmail(String code) {
-		String registEmail = CryptUtil.decryptAES(code);
+		String registEmail = CryptUtil.decryptAES(code,AppConstants.DEFAULT_SECRET_KEY);
 		ValidateUtils.isTrue(RegexUtil.isEmail(registEmail), ErrorCode.SYS_001);
 		
 		UserBasic userBasic = userBasicService.getByEmail(registEmail);

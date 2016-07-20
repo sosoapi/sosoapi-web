@@ -198,7 +198,7 @@ public class LoginServiceImpl implements LoginService{
 
 	@Override
 	public void resetPasswd(String code, String passwd) {
-		String email = CryptUtil.decryptAES(code);
+		String email = CryptUtil.decryptAES(code,AppConstants.DEFAULT_SECRET_KEY);
 		ValidateUtils.isTrue(RegexUtil.isEmail(email), ErrorCode.SYS_001);
 		
 		UserBasic userBasic = userBasicService.getByEmail(email);

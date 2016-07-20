@@ -95,7 +95,7 @@ public class UserBasicServiceImpl extends BaseMybatisServiceImpl<UserBasic,Long,
 
 	@Override
 	public void updateEmail(String code) {
-		Map<String, Object> updateInfo = JsonUtils.toObject(CryptUtil.decryptAES(code), HashMap.class);
+		Map<String, Object> updateInfo = JsonUtils.toObject(CryptUtil.decryptAES(code,AppConstants.DEFAULT_SECRET_KEY), HashMap.class);
 		Long userId = ((Number)updateInfo.get("userId")).longValue();
 		String email = (String)updateInfo.get("email");
 		ValidateUtils.isTrue(RegexUtil.isEmail(email), ErrorCode.SYS_001);
