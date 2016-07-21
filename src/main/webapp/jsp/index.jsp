@@ -16,13 +16,6 @@
 	  	.btn-fast:hover{
 	    	background:rgb(140, 214, 140)!important;
 	  	}
-	  	.banner{
-	    	/*padding-top: 150px;
-	    	height:650px;*/
-	  	}
-	  	.effect-wp{
-	    	width: 1400px;
-	  	}
 	  	.effect{
 	    	padding-top: 30px;
 	    	text-align: center;
@@ -30,6 +23,9 @@
 	  	.effect h4{
 	    	padding-top:10px;
 	    	line-height: 150%;
+	  	}
+	  	.effect img{
+	  		width:200px;
 	  	}
 	  	.featurette-header{
 	    	text-align: center;
