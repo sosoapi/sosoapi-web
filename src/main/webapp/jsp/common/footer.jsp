@@ -64,3 +64,14 @@
 
 <script type="text/javascript" src="js/common/common.js?version=1.0.4"></script>
 <script type="text/javascript" src="js/common/setting.js?version=1.0.3"></script>
+
+<!-- baidu统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?b6d830db139defa52e47fb1dc0018c06";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>

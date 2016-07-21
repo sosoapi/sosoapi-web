@@ -22,6 +22,10 @@ $(function() {
 function initAddOper(){
 	$("#addBtn").click(function(){
 		$("#operTypeId").val("add");
+		var moduleId = $("#searchModuleId").val();
+		if(!isNull(moduleId)){
+			$("#addModuleId").val(moduleId);
+		}
 	});
 }
 

@@ -86,6 +86,12 @@ function initSendResetCode(){
 
 //初始化登陆
 function initLogin(){
+	var loginValidCodeImgSrc = $("#loginValidCodeImg").attr("src");
+	//初始化验证码
+	$("#loginValidCodeImg").click(function(){
+    	this.src = loginValidCodeImgSrc + "&rand=" + Math.random();;
+    });
+	
 	//登陆时处理自动登陆
 	$("#loginBtn").click(function(){
 		$.cookie("autoLogin", "", { expires: -1 });
@@ -126,9 +132,10 @@ function initLogin(){
 
 //初始化注册
 function initRegist(){
+	var registValidCodeImgSrc = $("#registValidCodeImg").attr("src");
 	//初始化验证码
-	$("#validCodeImg").click(function(){
-    	this.src = this.src;
+	$("#registValidCodeImg").click(function(){
+    	this.src = registValidCodeImgSrc + "&rand=" + Math.random();;
     });
 	
 	$("#registForm").bootstrapValidator({

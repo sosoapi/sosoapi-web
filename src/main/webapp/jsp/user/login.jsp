@@ -41,7 +41,7 @@
 								<input type="text" name="validCode" placeholder="验证码" class="form-control"/>
 							</div>
 							<div class="col-lg-4">
-								<img id="validCodeImg" src="captcha/build.htm?oper=login" title="看不清楚，换一张" align="middle" style="cursor:pointer;margin-top:12px;height:33px;"/>
+								<img id="loginValidCodeImg" src="captcha/build.htm?oper=login" title="看不清楚，换一张" align="middle" style="cursor:pointer;margin-top:12px;height:33px;"/>
 							</div>
 						</div>
 					</div>
@@ -124,7 +124,7 @@
 								<input type="text" name="validCode" placeholder="验证码" class="form-control"/>
 							</div>
 							<div class="col-lg-4">
-								<img id="validCodeImg" src="captcha/build.htm?oper=regist" title="看不清楚，换一张" align="middle" style="cursor:pointer;margin-top:12px;height:33px;"/>
+								<img id="registValidCodeImg" src="captcha/build.htm?oper=regist" title="看不清楚，换一张" align="middle" style="cursor:pointer;margin-top:12px;height:33px;"/>
 							</div>
 						</div>
 					</div>

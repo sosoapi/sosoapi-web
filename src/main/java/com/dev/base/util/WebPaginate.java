@@ -127,8 +127,9 @@ public class WebPaginate {
     //获取请求url
     //处理nginx转换bug
     private String getRequestURI(HttpServletRequest request){
-    	String uri = request.getRequestURI();
-    	return uri.replace(CfgConstants.WEB_CONTEXT_PATH + "/", "");
+    	String uri = request.getRequestURI()
+    						.replace(CfgConstants.WEB_CONTEXT_PATH + "/", "");
+    	return uri.startsWith("/") ? uri.replaceFirst("/*", "") : uri;
     }
     
     //组装请求url

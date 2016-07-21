@@ -2,6 +2,7 @@ package com.dev.admin.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.admin.service.AdminService;
 import com.dev.base.enums.UserRole;
@@ -30,6 +31,7 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private UserLoginService userLoginService;
 	
+	@Transactional
 	@Override
 	public void regist(String nickName, String email,String passwd) {
 		//处理用户基本信息

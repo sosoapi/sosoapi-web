@@ -30,7 +30,7 @@ public class AppConstants {
 	/**
 	 * 默认密钥
 	 */
-	public static byte[] DEFAULT_SECRET_KEY = { 65, 35, -28, -74, -18, -102,
-												-11, 92, 54, 84, 50, 18,
-												-16, 18, -11, -48 };
+	public static byte[] DEFAULT_SECRET_KEY = { 67, 35, -58, -74, -18, -102,
+												-11, 92, 14, 84, 60, 8,
+												-16, 18, -1, -48 };
 }

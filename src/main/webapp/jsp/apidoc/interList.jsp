@@ -65,7 +65,7 @@
 			                	
 			                	<label class="control-label col-lg-1">模块</label>
 			                	<div class="col-lg-2">
-			                		<select class="form-control module-select" name="moduleId" data-initValue="${param.moduleId}">
+			                		<select class="form-control module-select" id="searchModuleId" name="moduleId" data-initValue="${param.moduleId}">
 		                				<option value="">全部</option>
 	                                </select>
 			                	</div>
@@ -178,7 +178,7 @@
 																		<label class="control-label col-lg-3">所属模块</label>
 																					
 																		<div class="col-lg-6">
-																			<select class="form-control module-select" name="moduleId">
+																			<select class="form-control module-select" id="addModuleId" name="moduleId" data-initValue="${param.moduleId}">
 																			</select>
 																		</div>
 																	</div>
