@@ -69,7 +69,7 @@ public class SwaggerController extends BaseController{
 	@RequestMapping("/auth/apidoc/preview.htm")
 	public String preview(HttpServletRequest request,Model model,Long docId){
 		ValidateUtils.notNull(docId, ErrorCode.SYS_001,"文档id不能为空");
-		String docUrl = (docId == 1) ? DEMO_DOC_URL : (CfgConstants.WEB_BASE_URL + "auth/apidoc/json/build.htm?docId=" + docId);
+		String docUrl = CfgConstants.WEB_BASE_URL + "auth/apidoc/json/build.htm?docId=" + docId;
 		model.addAttribute("docUrl", docUrl);
 		
 		return "forward:/swagger/index.jsp";
