@@ -5,6 +5,6 @@ import org.junit.Test;
 public class PetstoreModelTest {
 	@Test
 	public void testCombineModel(){
-		
+		//
 	}
 }
