@@ -88,6 +88,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/auth/**"/>
+			<mvc:exclude-mapping path="/auth/proj/mem/accept.htm*"/>
 			<bean class="com.dev.base.interceptor.PrivilegeInterceptor" />
 		</mvc:interceptor>
 		

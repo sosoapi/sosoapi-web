@@ -13,6 +13,11 @@ public class AppConstants {
 	public static final String SESSION_KEY_USER = "userInfo";
 	
 	/**
+	 * 保存到session中的邀请码accept_code
+	 */
+	public static final String SESSION_KEY_ACCEPT_CODE = "accept_code";
+	
+	/**
 	 * 注册相关验证码
 	 */
 	public static final String CAPTCHA_REGIST = "regist";

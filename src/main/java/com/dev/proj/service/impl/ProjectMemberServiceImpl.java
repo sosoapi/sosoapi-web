@@ -131,7 +131,7 @@ public class ProjectMemberServiceImpl extends BaseMybatisServiceImpl<ProjectMemb
 		
 		Long projId = FormatUtils.parseLong(inviteInfo.get("projId"));
 		//当前用户与被邀请的不是同一个
-		if (!userBasic.getEmail().equals(invitedEmail)) {
+		if (userBasic!=null && !userBasic.getEmail().equals(invitedEmail)) {
 			throw new AuthException();
 		}
 		

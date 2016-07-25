@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -113,6 +114,11 @@ public class LoginController extends BaseController{
 				break;
 		}
 		
+		//如果Session中存在邀请码就定位到邀请项目
+		String code = (String) WebUtil.getSessionAttr(request,AppConstants.SESSION_KEY_ACCEPT_CODE);
+		if(StringUtils.isNotEmpty(code)){
+			redirectUrl = "/auth/proj/mem/accept.htm?code="+code;
+		}
 		return WebUtil.getRedirectUrl(redirectUrl);
 	}
 	

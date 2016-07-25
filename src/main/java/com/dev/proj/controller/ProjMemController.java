@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dev.base.constant.AppConstants;
 import com.dev.base.controller.BaseController;
 import com.dev.base.enums.Role;
 import com.dev.base.exception.code.ErrorCode;
@@ -101,10 +102,19 @@ public class ProjMemController extends BaseController{
 		Long userId = getUserId(request);
 		Long projId = projectMemberService.accept(userId, code);
 		
-		//重新加载项目权限
-		reloadProjAuth(request);
+		if(getUserInfo(request) != null){
+			//重新加载项目权限
+			reloadProjAuth(request);
+		}
 				
 		model.addAttribute("projId", projId);
+		
+		if(WebUtil.getSessionAttr(request, AppConstants.SESSION_KEY_ACCEPT_CODE) == null){
+			WebUtil.setSessionAttr(request, AppConstants.SESSION_KEY_ACCEPT_CODE, code);
+			return WebUtil.getRedirectUrl("/forwardLogin.htm");
+		}else{
+			WebUtil.removeSessionAttr(request, AppConstants.SESSION_KEY_ACCEPT_CODE);
+		}
 		
 		return WebUtil.getRedirectUrl("/auth/proj/info.htm");
 	}
