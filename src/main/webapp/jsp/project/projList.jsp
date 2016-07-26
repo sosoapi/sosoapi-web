@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 	<base href="${Cfg.WEB_BASE_URL}"/>
@@ -26,28 +28,28 @@
                         <!-- SEARCH SECTION -->
                         <form class="form-horizontal" action="auth/proj/list.htm" method="get">
 			                <div class="form-group">
-			                	<label class="control-label col-lg-1">编码</label>
+			                	<label class="control-label col-lg-1"><spring:message code="project.list.page.number"/></label>
 			                	<div class="col-lg-2">
 			                		<input type="text" name="code" value="${param.code}" class="form-control">
 			                	</div>
 			                	
-			                	<label class="control-label col-lg-1">名称</label>
+			                	<label class="control-label col-lg-1"><fmt:message key="project.list.page.name" /></label>
 			                	<div class="col-lg-2">
 			                		<input type="text" name="name" value="${param.name}" class="form-control">
 			                	</div>
 			                	
-			                	<label class="control-label col-lg-1">状态</label>
+			                	<label class="control-label col-lg-1"><fmt:message key="project.list.page.status" /></label>
 			                	<div class="col-lg-2">
 			                		<select name="status" class="form-control" data-initValue="${param.status}">
-		                				<option value="">全部</option>
-	                                	<option value="open">启用</option>
-	                                	<option value="close">关闭</option>
+		                				<option value=""><fmt:message key="project.list.page.all" /></option>
+	                                	<option value="open"><fmt:message key="project.list.page.open" /></option>
+	                                	<option value="close"><fmt:message key="project.list.page.close" /></option>
 	                                </select>
 			                	</div>
 			                	
 			                	<div class="col-lg-3">
 			                		<button type="submit" class="btn btn-default">
-			                			<i class="fa fa-search"></i> 查询
+			                			<i class="fa fa-search"></i> <fmt:message key="project.list.page.search" />
 			                		</button>
 			                	</div>
 			                </div>
@@ -57,7 +59,7 @@
 	                    
 	                    <div class="panel panel-default">
                        		<div class="panel-heading">
-                           		<div class="text-muted bootstrap-admin-box-title">项目列表</div>
+                           		<div class="text-muted bootstrap-admin-box-title"><fmt:message key="project.list.page.proList" /></div>
                            		<div class="button-groups pull-right">
                            			<div class="btn-group">
                            				<!-- <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-hover="dropdown" aria-expanded="false">
@@ -72,7 +74,7 @@
 		                         		</ul> -->
                                        	
                                  		<a href="#projFormModal" data-toggle="modal" class="text-muted">
-                                    		<i class="fa fa-plus"></i> 新增
+                                    		<i class="fa fa-plus"></i> <fmt:message key="project.list.page.new" />
                                  		</a>
                            			</div>
                            		</div>
@@ -86,12 +88,12 @@
 			                        		<thead>
 				                            	<tr>
 				                                	<th>#</th>
-				                                	<th>编码</th>
-				                                    <th>名称</th>
-				                                    <th>角色</th>
-				                                    <th>创建时间</th>
-				                                    <th>状态</th>
-				                                    <th>操作</th>
+				                                	<th><fmt:message key="project.list.page.number" /> </th>
+				                                    <th><fmt:message key="project.list.page.name" /></th>
+				                                    <th><fmt:message key="project.list.page.role" /></th>
+				                                    <th><fmt:message key="project.list.page.createTime" /></th>
+				                                    <th><fmt:message key="project.list.page.status" /></th>
+				                                    <th><fmt:message key="project.list.page.operation" /></th>
 				                               </tr>
 				                            </thead>
 			                            
@@ -111,7 +113,7 @@
 				                                         	<td>${projInfo.status.displayName}</td>
 				                                         	<td class="actions">
 				                                         		<button onclick="quitProj(${projInfo.projId});" type="button" class="btn btn-sm btn-primary">
-			                                                   		<i class="fa fa-frown-o"></i> 退出
+			                                                   		<i class="fa fa-frown-o"></i> <fmt:message key="project.list.page.quit" />
 			                                                   	</button>
 			                                                   	
 				                                         		<c:if test="${projInfo.role == 'admin'}">
@@ -119,11 +121,11 @@
 				                                                   		<i class="fa fa-pencil"></i> 编辑
 				                                                   	</button> -->
 				                                                   	<button onclick="copyProj(${projInfo.projId},'${projInfo.name}');" type="button" class="btn btn-sm btn-success">
-				                                                   		<i class="fa fa-plus"></i> 复制
+				                                                   		<i class="fa fa-plus"></i> <fmt:message key="project.list.page.copy" />
 				                                                   	</button>
 				                                                   	
 				                                                	<button onclick="delProj(${projInfo.projId});" type="button" class="btn btn-sm btn-danger">
-				                                                   		<i class="fa fa-trash"></i> 删除
+				                                                   		<i class="fa fa-trash"></i> <fmt:message key="project.list.page.delete" />
 				                                                   	</button>
 				                                         		</c:if>
 				                                           </td>
@@ -145,32 +147,32 @@
 												<div class="modal-content">
 													<div class="modal-header">
 														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-														<h4 class="modal-title">项目信息</h4>
+														<h4 class="modal-title"><fmt:message key="project.list.page.projInfo" /></h4>
 													</div>
 													<div class="modal-body">
 														<div class="row">
 															<div class="col-lg-12">
 																<form id="projForm" role="form" class="form-horizontal">
 																	<div class="form-group">
-																		<label class="control-label col-lg-3">编码</label> 
+																		<label class="control-label col-lg-3"><fmt:message key="project.list.page.number" /></label> 
 																		<div class="col-lg-6">
 																			<input name="code" class="form-control" />
 																		</div>
 																	</div>
 																	
 																	<div class="form-group">
-																		<label class="control-label col-lg-3">名称</label> 
+																		<label class="control-label col-lg-3"><fmt:message key="project.list.page.name" /></label> 
 																		<div class="col-lg-6">
 																			<input name="name" class="form-control" />
 																		</div>
 																	</div>
 																	
 												                	<div class="form-group">
-												                		<label class="control-label col-lg-3">状态</label>
+												                		<label class="control-label col-lg-3"><fmt:message key="project.list.page.status" /></label>
 												                		<div class="col-lg-6">
 																			<select name="status" class="form-control">
-												                				<option value="open">开启</option>
-												                				<option value="close">关闭</option>
+												                				<option value="open"><fmt:message key="project.list.page.open" /></option>
+												                				<option value="close"><fmt:message key="project.list.page.close" /></option>
 											                                </select>
 																		</div>
 												                	</div>
@@ -180,8 +182,8 @@
 													</div>
 													
 													<div class="modal-footer">
-														<button id="saveProjBtn" type="button" class="btn btn-success">保存</button>
-														<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+														<button id="saveProjBtn" type="button" class="btn btn-success"><fmt:message key="project.list.page.save" /></button>
+														<button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="project.list.page.cancle" /></button>
 													</div>
 												</div>
 											</div>

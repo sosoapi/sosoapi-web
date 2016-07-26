@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!-- small navbar -->
 <nav class="navbar navbar-default navbar-fixed-top bootstrap-admin-navbar-sm" role="navigation">
     <div class="container">
@@ -52,13 +53,29 @@
 		                                </li>
 		                            </ul>
 		                        </li>	
+		                        <li class="dropdown">
+		                            <a href="javascript:void(0);" role="button" class="dropdown-toggle" data-hover="dropdown"> 
+		                            	<i class="fa fa-cof"></i> <fmt:message key="nav.top.page.lang" /> 
+		                            	<i class="caret"></i>
+		                            </a>
+		                            
+		                            <ul class="dropdown-menu">
+		                                <li>
+		                                	<a href="#"><fmt:message key="nav.top.page.en_US" /></a>
+		                                </li>
+		                                
+		                                <li>
+		                                	<a href="#"><fmt:message key="nav.top.page.zh_CN" /></a>
+		                                </li>
+		                            </ul>
+		                        </li>	
                     		</c:when>
                     		<c:otherwise>
                     			<li>
-                    				<a href="forwardLogin.htm"> 登录</a>
+                    				<a href="forwardLogin.htm"> <fmt:message key="nav.top.page.signIn" /></a>
                     			</li>
                     			<li>
-                    				<a href="regist/forwardRegist.htm"> 注册</a>
+                    				<a href="regist/forwardRegist.htm"> <fmt:message key="nav.top.page.signUp" /></a>
                     			</li>
                     		</c:otherwise>
                     	</c:choose>

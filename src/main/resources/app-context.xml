@@ -41,6 +41,12 @@
 		</property>
 	</bean>
 	
+	<!-- 语言国际化资源配置 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="message"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+	
 	<!-- 邮件发送服务 -->
 	<bean id="mailService" class="com.dev.base.mail.service.impl.ApacheMailServiceImpl"/>
 	

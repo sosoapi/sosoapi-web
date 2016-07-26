@@ -84,6 +84,12 @@
 	<!-- 异常处理-->
 	<bean id="exceptionResolver" class="com.dev.base.exception.handler.BaseExceptionHandler" />
 
+	<!-- 语言国际化 -->
+	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en_US"/>
+    </bean>
+    
 	<!-- MVC拦截器 -->	
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -96,5 +102,11 @@
 			<mvc:mapping path="/admin/**"/>
 			<bean class="com.dev.admin.interceptor.AdminInterceptor" />
 		</mvc:interceptor>
+		
+		<!--国际化资源切换（根据请求参数中的locale参数自动切换）-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <ref bean="localeChangeInterceptor"/>
+        </mvc:interceptor>
 	</mvc:interceptors>
 </beans>  
