@@ -100,6 +100,7 @@
 		
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**"/>
+			<mvc:exclude-mapping path="/admin/setting/language.htm*"/>
 			<bean class="com.dev.admin.interceptor.AdminInterceptor" />
 		</mvc:interceptor>
 		

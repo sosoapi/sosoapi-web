@@ -14,15 +14,15 @@
                     </ul> -->
                     <ul class="nav navbar-nav navbar-right">
                     	<li>
-                  			<a href=""><i class="fa fa-home"></i> 网站首页</a>
+                  			<a href=""><i class="fa fa-home"></i> <fmt:message key="nav.top.page.index" /></a>
                         </li>
 		                        
                     	<c:choose>
                     		<c:when test="${not empty userInfo}">
                     			<li>
-		                            <a href="auth/msg/list.htm" style="width:95px;">
+		                            <a href="auth/msg/list.htm" style="width:110px;">
 		                            	<i class="fa fa-envelope"></i> 
-		                            	<span>消息</span>
+		                            	<span><fmt:message key="nav.top.page.message" /></span>
 		                            	<c:if test="${userInfo.newMsgCount > 0 }">
 											<span class="label label-danger">${userInfo.newMsgCount} </span>		                            	
 		                            	</c:if>
@@ -43,29 +43,29 @@
 		                            
 		                            <ul class="dropdown-menu">
 		                                <li>
-		                                	<a href="auth/user/setting.htm">账号管理</a>
+		                                	<a href="auth/user/setting.htm"><fmt:message key="nav.top.page.accountManagement" /></a>
 		                                </li>
 		                                
 		                                <li role="presentation" class="divider"></li>
 		                                
 		                                <li>
-		                                	<a href="logout.htm">退出</a>
+		                                	<a href="logout.htm"><fmt:message key="nav.top.page.exit" /></a>
 		                                </li>
 		                            </ul>
 		                        </li>	
 		                        <li class="dropdown">
 		                            <a href="javascript:void(0);" role="button" class="dropdown-toggle" data-hover="dropdown"> 
-		                            	<i class="fa fa-cof"></i> <fmt:message key="nav.top.page.lang" /> 
+		                            	<i class="fa fa-language"></i> <fmt:message key="nav.top.page.lang" /> 
 		                            	<i class="caret"></i>
 		                            </a>
 		                            
 		                            <ul class="dropdown-menu">
-		                                <li>
-		                                	<a href="#"><fmt:message key="nav.top.page.en_US" /></a>
+		                                <li <c:if test="${locale eq 'en_US'}">style="background-color: #337ab7"</c:if>>
+		                                	<a href="javascript:settingLanguage('en_US');"><fmt:message key="nav.top.page.en_US" /></a>
 		                                </li>
 		                                
-		                                <li>
-		                                	<a href="#"><fmt:message key="nav.top.page.zh_CN" /></a>
+		                                <li <c:if test="${locale eq 'zh_CN'}">style="background-color: #337ab7"</c:if>>
+		                                	<a href="javascript:settingLanguage('zh_CN');"><fmt:message key="nav.top.page.zh_CN" /></a>
 		                                </li>
 		                            </ul>
 		                        </li>	
@@ -74,7 +74,7 @@
                     			<li>
                     				<a href="forwardLogin.htm"> <fmt:message key="nav.top.page.signIn" /></a>
                     			</li>
-                    			<li>
+                    			<li>>
                     				<a href="regist/forwardRegist.htm"> <fmt:message key="nav.top.page.signUp" /></a>
                     			</li>
                     		</c:otherwise>
@@ -123,40 +123,46 @@
                     	<c:if test="${not empty userInfo}">
                     		<li class="${param.menuHome ? 'active' : ''}">
 	                        	<c:if test="${userInfo.role == 'admin'}">
-									<a href="admin/home.htm">首页</a>
+									<a href="admin/home.htm"><fmt:message key="project.indexPage" /></a>
 								</c:if>
 								<c:if test="${userInfo.role != 'admin'}">
-									<a href="auth/home/home.htm">首页</a>												
+									<a href="auth/home/home.htm"><fmt:message key="project.indexPage" /></a>												
 								</c:if>
 	                        </li>
 	                        
 	                        <li class="${param.menuProject ? 'active' : ''}">
-	                        	<a href="auth/proj/list.htm">项目管理</a>
+	                        	<a href="auth/proj/list.htm"><fmt:message key="project.projectManagent" /></a>
 	                        </li>
 	                        
 	                        <li class="${param.menuApiDoc ? 'active' : ''}">
-	                        	<a href="auth/doc/list.htm">API文档管理</a>
+	                        	<a href="auth/doc/list.htm"><fmt:message key="project.apiDocumentManagent" /></a>
 	                        </li>
 	                        
 	                        <li class="${param.menuUserHome ? 'active' : ''}">
-	                        	<a href="auth/user/home.htm">个人中心</a>
+	                        	<a href="auth/user/home.htm"><fmt:message key="project.personalCenter" /></a>
 	                        </li>
 	                        
 	                        <li class="${param.menuSuggest ? 'active' : ''}">
-	                        	<a href="auth/suggest/forwardSuggest.htm">意见反馈</a>
+	                        	<a href="auth/suggest/forwardSuggest.htm"><fmt:message key="project.feedback" /></a>
 	                        </li>
                     	</c:if>
                         
                         <li class="${param.menuFaq ? 'active' : ''}">
-                        	<a href="pass/faq/home.htm">常见问题</a>
+                        	<a href="pass/faq/home.htm"><fmt:message key="project.FAQ" /></a>
                         </li>
                     </ul>
-                    
-                    <div class="navbar-right" style="margin-top:15px;">
-						技术交流群:<a href="javascript:void(0);" class="text-muted text-center">305629848</a>
-					</div>
                 </div>
             </div>
         </div>
     </div>
 </nav>
+<script>
+	function settingLanguage(locale){
+		if('${locale}' == locale) return;
+		$.post("${Cfg.WEB_BASE_URL}admin/setting/language.htm",{locale:locale},function(backData){
+			if(backData.errorCode == 0){
+				history.go(0);
+			}
+		});
+	}
+</script>

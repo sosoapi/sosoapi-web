@@ -1,5 +1,6 @@
 package com.dev.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import com.dev.base.json.JsonUtils;
 import com.dev.base.util.MailUtil;
 import com.dev.base.util.Pager;
 import com.dev.base.util.WebPaginate;
+import com.dev.base.util.WebUtil;
 import com.dev.base.utils.ValidateUtils;
 import com.dev.proj.service.ProjectService;
 import com.dev.proj.vo.ProjectInfo;
@@ -232,6 +234,13 @@ public class AdminController extends BaseController{
 		MailUtil.send(toEmail, title, content);
 		suggestService.dealSuggest(suggestId);
 		
+		return JsonUtils.createSuccess();
+	}
+	
+	@RequestMapping("/setting/language.htm")
+	public @ResponseBody Map<String,Object> settingLanguage(HttpServletRequest request,String locale){
+		ValidateUtils.notNull(locale, ErrorCode.SYS_001,"语言参数不能为空");
+		WebUtil.setSessionAttr(request,"locale", locale);
 		return JsonUtils.createSuccess();
 	}
 }

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,13 +50,13 @@
                 	<div class="col-lg-12">
                 		<div class="panel panel-default">
 	                        <div class="panel-heading">
-	                            <div class="text-muted bootstrap-admin-box-title">基本信息</div>
+	                            <div class="text-muted bootstrap-admin-box-title"><fmt:message key="project.info.page.basicInfo" /></div>
 	                        </div>
 	                        <div class="bootstrap-admin-panel-content">
                                 <form id="projInfoForm" class="form-horizontal">
                                 	<input type="hidden" name="projId" value="${projInfo.projId}">
                                 	<div class="form-group">
-					                    <label class="control-label col-lg-3">项目编码</label>
+					                    <label class="control-label col-lg-3"><fmt:message key="project.info.page.projNumber" /></label>
 					
 					                    <div class="col-lg-6">
 					                        <input type="text" name="code" value="${projInfo.code}" class="form-control">
@@ -63,7 +64,7 @@
 					                </div>
 					                
 					                <div class="form-group">
-					                    <label class="control-label col-lg-3">项目名称</label>
+					                    <label class="control-label col-lg-3"><fmt:message key="project.info.page.projName" /></label>
 					
 					                    <div class="col-lg-6">
 					                        <input type="text" name="name" value="${projInfo.name}" class="form-control">
@@ -71,7 +72,7 @@
 					                </div>
 					
 					                <div class="form-group">
-					                    <label class="control-label col-lg-3">项目描述</label>
+					                    <label class="control-label col-lg-3"><fmt:message key="project.info.page.projDiscribe" /></label>
 					
 					                    <div class="col-lg-6">
 					                        <textarea name="description" class="form-control" rows="10">${projInfo.description}</textarea>
@@ -91,12 +92,12 @@
 									</div> -->
 									
 									<div class="form-group">
-				                        <label class="control-label col-lg-3">状态</label>
+				                        <label class="control-label col-lg-3"><fmt:message key="project.list.page.status" /></label>
 				
 				                        <div class="col-lg-6">
 				                            <select name="status" class="form-control" data-initValue="${projInfo.status}">
-									            <option value="open">开启</option>
-									            <option value="close">关闭</option>
+									            <option value="open"><fmt:message key="project.list.page.open" /></option>
+									            <option value="close"><fmt:message key="project.list.page.close" /></option>
 									        </select>
 				                        </div>
 				                    </div>
@@ -104,7 +105,7 @@
 				                    <auth:projAuth projId="${param.projId}">
 				                    	<div class="form-group">
 					                        <div class="col-lg-1 col-lg-offset-3">
-					                            <button id="saveProjInfoBtn" class="btn btn-success btn-lg" type="button">保存</button>
+					                            <button id="saveProjInfoBtn" class="btn btn-success btn-lg" type="button"><fmt:message key="project.list.page.save" /></button>
 					                        </div>
 					                    </div>
 				                    </auth:projAuth>
