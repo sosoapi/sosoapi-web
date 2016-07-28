@@ -58,7 +58,7 @@ public class MailConstants {
 	private static String loadTmpl(String fileName){
 		Resource fileRource = new ClassPathResource(fileName);
 		try {
-			return IOUtils.toString(fileRource.getInputStream());
+			return IOUtils.toString(fileRource.getInputStream(),"UTF-8");
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
