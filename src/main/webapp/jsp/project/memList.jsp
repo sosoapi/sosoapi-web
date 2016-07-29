@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,31 +54,31 @@
                         	<input type="hidden" name="projId" value="${param.projId}">
                         	<input type="hidden" name="docId" value="${param.docId}">
 			                <div class="form-group">
-			                	<label class="control-label col-lg-1">昵称</label>
+			                	<label class="control-label col-lg-1"><fmt:message key="project.member.list.nickName" /></label>
 			                	<div class="col-lg-2">
 			                		<input type="text" name="nickName" value="${param.nickName}" class="form-control">
 			                	</div>
 			                	
-			                	<label class="control-label col-lg-1">邮箱</label>
+			                	<label class="control-label col-lg-1"><fmt:message key="project.member.list.email" /></label>
 			                	<div class="col-lg-2">
 			                		<input type="text" name="email" value="${param.email}" class="form-control">
 			                	</div>
 			                	
-			                	<label class="control-label col-lg-1">角色</label>
+			                	<label class="control-label col-lg-1"><fmt:message key="project.member.list.role" /></label>
 			                	<div class="col-lg-2">
 			                		<select class="form-control" name="role" data-initValue="${param.role}">
-		                				<option value="">全部</option>
-	                                	<option value="admin">管理员</option>
+		                				<option value=""><fmt:message key="project.member.list.role.all" /></option>
+	                                	<option value="admin"><fmt:message key="project.member.list.role.admin" /></option>
 	                                	<!-- <option value="dev_serv">后端开发</option>
 	                                	<option value="dev_client">前端开发</option> -->
-	                                	<option value="guest">访客</option>
+	                                	<option value="guest"><fmt:message key="project.member.list.role.guest" /></option>
 	                                </select>
 			                	</div>
 			                	
 			                	
 			                	<div class="col-lg-3">
 			                		<button type="submit" class="btn btn-default">
-			                			<i class="fa fa-search"></i> 查询
+			                			<i class="fa fa-search"></i> <fmt:message key="common.button.search" />
 			                		</button>
 			                	</div>
 			                </div>
@@ -87,7 +88,7 @@
 	                    
 	                    <div class="panel panel-default">
                        		<div class="panel-heading">
-                           		<div class="text-muted bootstrap-admin-box-title">成员列表</div>
+                           		<div class="text-muted bootstrap-admin-box-title"><fmt:message key="project.member.list.memberList" /></div>
                            		<div class="btn-group pull-right">
                            			<auth:projAuth projId="${param.projId}">
                            				<!-- <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-hover="dropdown" aria-expanded="false">
@@ -102,7 +103,7 @@
 		                         		</ul> -->
                                  		
                                  		<a href="auth/proj/mem/listForAdd.htm?projId=${param.projId}&docId=${param.docId}" class="text-muted">
-                                    		<i class="fa fa-plus"></i> 邀请成员
+                                    		<i class="fa fa-plus"></i> <fmt:message key="project.member.list.inviteMember" />
                                  		</a>
                            			</auth:projAuth>
 	                     		</div>
@@ -117,11 +118,11 @@
 			                            	<thead>
 			                                	<tr>
 			                                    	<th>#</th>
-			                                        <th>昵称</th>
-			                                        <th>邮箱</th>
-			                                        <th>角色</th>
-			                                        <th>加入时间</th>
-			                                        <th>操作</th>
+			                                        <th><fmt:message key="project.member.list.nickName" /></th>
+			                                        <th><fmt:message key="project.member.list.email" /></th>
+			                                        <th><fmt:message key="project.member.list.role" /></th>
+			                                        <th><fmt:message key="project.member.list.joinTime" /></th>
+			                                        <th><fmt:message key="project.member.list.operation" /></th>
 			                                    </tr>
 			                                </thead>
 			                                <tbody>
@@ -141,11 +142,11 @@
 				                                         	<td class="actions">
 				                                         		<auth:projAuth projId="${param.projId}">
 				                                         			<button onclick="initUpdateMember(${memInfo.userId});" type="button" class="btn btn-sm btn-primary">
-				                                                   		<i class="fa fa-pencil"></i> 编辑
+				                                                   		<i class="fa fa-pencil"></i> <fmt:message key="common.button.edit" />
 				                                                   	</button>
 				                                                   	
 				                                                	<button onclick="removeMember(${memInfo.userId})" type="button" class="btn btn-sm btn-danger">
-				                                                   		<i class="fa fa-trash"></i> 移除
+				                                                   		<i class="fa fa-trash"></i> <fmt:message key="common.button.remove" />
 				                                                   	</button>
 				                                         		</auth:projAuth>
 				                                           </td>
@@ -171,7 +172,7 @@
 								<div class="modal-content">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-										<h4 class="modal-title">成员信息</h4>
+										<h4 class="modal-title"><fmt:message key="project.member.list.memberInfo" /></h4>
 									</div>
 									<div class="modal-body">
 										<div class="row">
@@ -180,27 +181,27 @@
 													<input type="hidden" name="projId" value="${param.projId}">
 													<input type="hidden" name="userId">
 													<div class="form-group">
-														<label class="control-label col-lg-3">昵称</label> 
+														<label class="control-label col-lg-3"><fmt:message key="project.member.list.nickName" /></label> 
 														<div class="col-lg-6">
 															<input name="nickName" class="form-control" readonly/>
 														</div>
 													</div>
 													
 													<div class="form-group">
-														<label class="control-label col-lg-3">邮箱</label> 
+														<label class="control-label col-lg-3"><fmt:message key="project.member.list.email" /></label> 
 														<div class="col-lg-6">
 															<input name="email" class="form-control" readonly/>
 														</div>
 													</div>
 													
 								                	<div class="form-group">
-									                    <label class="control-label col-lg-3">角色</label>
+									                    <label class="control-label col-lg-3"><fmt:message key="project.member.list.role" /></label>
 									                    <div class="col-lg-6" data-toggle="popover" data-content="对方重新登录后生效">
 									                        <select class="form-control" name="role">
-							                                	<option value="admin">管理员</option>
+							                                	<option value="admin"><fmt:message key="project.member.list.role.admin" /></option>
 							                                	<!-- <option value="dev_serv">后端开发</option>
 							                                	<option value="dev_client">前端开发</option> -->
-							                                	<option value="guest">访客</option>
+							                                	<option value="guest"><fmt:message key="project.member.list.role.guest" /></option>
 							                                </select>
 									                    </div>
 									                </div>
@@ -210,8 +211,8 @@
 									</div>
 									
 									<div class="modal-footer">
-										<button id="saveMemBtn" type="button" class="btn btn-success">保存</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+										<button id="saveMemBtn" type="button" class="btn btn-success"><fmt:message key="common.button.save" /></button>
+										<button type="button" class="btn btn-default" data-dismiss="modal"><fmt:message key="common.button.cancle" /></button>
 									</div>
 								</div>
 							</div>

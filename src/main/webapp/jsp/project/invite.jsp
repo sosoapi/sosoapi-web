@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,9 +40,9 @@
                         <div class="bootstrap-admin-content-title">
                 	       	<ul class="breadcrumb">
                                 <li>
-                                	<a href="auth/proj/mem/list.htm?projId=${param.projId}&docId=${param.docId}">项目成员</a>
+                                	<a href="auth/proj/mem/list.htm?projId=${param.projId}&docId=${param.docId}"><fmt:message key="project.member.invite.projMembers" /></a>
                                 </li>
-                                <li class="active">邀请成员</li>
+                                <li class="active"><fmt:message key="project.member.list.inviteMember" /></li>
 							</ul>
                         </div>
                     </div>
@@ -53,11 +54,11 @@
                 		
                 		<ul class="nav nav-tabs">
                 			<li class="active">
-                            	<a id="directInviteTab" href="#directInvite" data-toggle="tab">直接加入</a>
+                            	<a id="directInviteTab" href="#directInvite" data-toggle="tab"><fmt:message key="project.member.invite.addDirect" /></a>
                             </li>
                             
                     		<li class="">
-                    			<a id="emailInviteTab" href="#emailInvite" data-toggle="tab">邮件邀请</a>
+                    			<a id="emailInviteTab" href="#emailInvite" data-toggle="tab"><fmt:message key="project.member.invite.byEmail" /></a>
                            	</li>
                      	</ul>
                             
@@ -67,14 +68,14 @@
 									<div class="col-lg-12">
 										<div class="alert alert-success bootstrap-admin-alert">
 								        	<a class="close" data-dismiss="alert" href="#">×</a>
-								            <h4>注意:只有之前参加过同一个项目的成员才可以直接加入到项目中。</h4>
+								            <h4><fmt:message key="project.member.invite.note" /></h4>
 								       	</div>
 								   	</div>
 								</div>
 								
 								<div class="panel panel-default">
 		                       		<div class="panel-heading">
-		                           		<div class="text-muted bootstrap-admin-box-title">历史成员列表</div>
+		                           		<div class="text-muted bootstrap-admin-box-title"><fmt:message key="project.member.invite.histroyMemberList" /></div>
 		                       		</div>
 										
 		                       		<div class="bootstrap-admin-panel-content">
@@ -85,10 +86,10 @@
 							          				<thead>
 										               	<tr>
 										                	<th class="col-lg-2">#</th>
-										                	<th class="col-lg-2">昵称</th>
-										                    <th class="col-lg-3">邮箱</th>
-										                    <th class="col-lg-3">预设角色</th>
-										                    <th class="col-lg-2">操作</th>
+										                	<th class="col-lg-2"><fmt:message key="project.member.list.nickName" /></th>
+										                    <th class="col-lg-3"><fmt:message key="project.member.list.email" /></th>
+										                    <th class="col-lg-3"><fmt:message key="project.member.invite.setRole" /></th>
+										                    <th class="col-lg-2"><fmt:message key="project.member.list.operation" /></th>
 										              	</tr>
 							               			</thead>
 							              
@@ -103,13 +104,13 @@
 						                                         	<td>${memInfo.email}</td>
 						                                         	<td>
 						                                         		<select class="form-control" name="role">
-						                                         			<option value="guest">访客</option>
-										                                	<option value="admin">管理员</option>
+						                                         			<option value="guest"><fmt:message key="project.member.list.role.guest" /></option>
+										                                	<option value="admin"><fmt:message key="project.member.list.role.admin" /></option>
 										                                </select>
 						                                         	</td>
 						                                         	<td class="actions">
 						                                         		<button onclick="addMember(${memInfo.userId});" type="button" class="btn btn-sm btn-success">
-					                                                   		<i class="fa fa-plus"></i> <span>添加</span>
+					                                                   		<i class="fa fa-plus"></i> <span><fmt:message key="project.member.list.role.admin" /></span>
 					                                                   	</button>
 						                                           </td>
 						                                     	</tr>
@@ -130,12 +131,12 @@
 									<div class="col-lg-12">
 										<form id="inviteForm" role="form" class="form-horizontal">
 											<div class="form-group">
-												<label class="control-label col-lg-3">成员邮箱</label> 
+												<label class="control-label col-lg-3"><fmt:message key="project.member.invite.menberEmail" /></label> 
 												<div class="col-lg-6">
 													<input id="invitedEmail" name="invitedEmail" class="form-control" />
 												</div>
 												<div class="col-lg-3">
-													<button id="inviteBtn" type="button" class="btn btn-success">邀请</button>
+													<button id="inviteBtn" type="button" class="btn btn-success"><fmt:message key="project.member.invite.button.invite" /></button>
 												</div>
 											</div>
 										</form>

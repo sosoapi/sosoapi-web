@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,13 +50,13 @@
                 	<div class="col-lg-12">
                 		<div class="panel panel-default">
                         	<div class="panel-heading">
-                            	<div class="text-muted bootstrap-admin-box-title">邮件通知</div>
+                            	<div class="text-muted bootstrap-admin-box-title"><fmt:message key="project.email.note" /></div>
                              </div>
                              <div class="bootstrap-admin-panel-content">
                              	<form id="noticeForm" class="form-horizontal">
                              		<input type="hidden" name="projId" value="${param.projId}"/>
                              		<div class="form-group">
-					                    <label class="control-label col-lg-2">邮件标题</label>
+					                    <label class="control-label col-lg-2"><fmt:message key="project.email.title" /></label>
 					
 					                    <div class="col-lg-8">
 					                        <input type="text" name="title" class="form-control" value='项目[${projTempMap["" + param.projId + ""].code}] - 接口变更通知'>
@@ -63,31 +64,31 @@
 					                </div>
 					         
 					         		<div class="form-group">
-					                    <label class="control-label col-lg-2">是否添加到变更历史中</label>
+					                    <label class="control-label col-lg-2"><fmt:message key="project.email.isAddToChangeHistory" /></label>
 					
 					                    <div class="col-lg-8">
 					                        <select name="addLog" class="form-control">
-	                                			<option value="true">是</option>
-	                                			<option value="false">否</option>
+	                                			<option value="true"><fmt:message key="project.email.yes" /></option>
+	                                			<option value="false"><fmt:message key="project.email.no" /></option>
 									        </select>
 					                    </div>
 					                </div>
 					                
 					         		<div class="form-group">
-					                    <label class="control-label col-lg-2">通知角色类型</label>
+					                    <label class="control-label col-lg-2"><fmt:message key="project.email.notify.roleType" /></label>
 					
 					                    <div class="col-lg-8">
 					                        <select name="receiverRole" class="form-control">
-									            <option value="">所有成员</option>
-									            <option value="guest">访客</option>
-	                                			<option value="admin">管理员</option>
-	                                			<option value="none">无</option>
+									            <option value=""><fmt:message key="project.email.member.all" /></option>
+									            <option value="guest"><fmt:message key="project.member.list.role.guest" /></option>
+	                                			<option value="admin"><fmt:message key="project.member.list.role.admin" /></option>
+	                                			<option value="none"><fmt:message key="project.email.member.none" /></option>
 									        </select>
 					                    </div>
 					                </div>
 					                
 					                <div class="form-group">
-					                    <label class="control-label col-lg-2">其他通知邮箱</label>
+					                    <label class="control-label col-lg-2"><fmt:message key="project.email.notify.otherEmial" /></label>
 					
 					                    <div class="col-lg-8">
 					                        <textarea name="otherReceivers" class="form-control" placeholder="多个邮箱以';'分隔"></textarea>
@@ -95,7 +96,7 @@
 					                </div>
 									               
 					                <div class="form-group">
-					                    <label class="control-label col-lg-2">内容</label>
+					                    <label class="control-label col-lg-2"><fmt:message key="project.email.notify.content" /></label>
 					
 					                    <div class="col-lg-8">
 					                    	<div id="noticeContent"></div>
@@ -105,7 +106,7 @@
 					                <div class="form-group">
 					                    <div class="col-lg-offset-2 col-lg-8">
 					                        <div class="form-actions">
-		                                    	<input id="saveBtn" type="button" value="提交" class="btn btn-success" />
+		                                    	<input id="saveBtn" type="button" value="<fmt:message key="common.button.commit" />" class="btn btn-success" />
 		                                	</div>
 					                    </div>
 					                </div>
