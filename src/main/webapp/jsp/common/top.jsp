@@ -20,7 +20,7 @@
                     	<c:choose>
                     		<c:when test="${not empty userInfo}">
                     			<li>
-		                            <a href="auth/msg/list.htm" style="width:110px;">
+		                            <a href="auth/msg/list.htm" style="width:120px;">
 		                            	<i class="fa fa-envelope"></i> 
 		                            	<span><fmt:message key="nav.top.page.message" /></span>
 		                            	<c:if test="${userInfo.newMsgCount > 0 }">
