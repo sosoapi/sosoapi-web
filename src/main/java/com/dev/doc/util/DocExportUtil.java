@@ -211,6 +211,9 @@ public class DocExportUtil {
 	private static Map<String, Object> parseRefNodeInfo(SchemaNodeInfo nodeInfo,Map<Long, Map> dealedMap){
 		Map<String, Object> tmplData = MapUtils.newMap();
 		Map<String,Object> temp = dealedMap.get(nodeInfo.getRefSchemaId());
+		if (CollectionUtils.isEmpty(temp)) {
+			return tmplData;
+		}
 		if (temp.containsKey(LIST_KEY_NAME)) {//处理引用是数组情况
 			tmplData.put(nodeInfo.getCode(), temp.get(LIST_KEY_NAME));
 		}
