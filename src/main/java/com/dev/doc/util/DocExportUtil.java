@@ -1,26 +1,17 @@
 package com.dev.doc.util;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.dev.base.enums.ParamPosition;
+import com.dev.base.enums.SchemaType;
+import com.dev.base.json.JsonUtils;
+import com.dev.base.utils.MapUtils;
+import com.dev.doc.entity.*;
+import com.dev.doc.vo.SchemaNodeInfo;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import com.dev.base.enums.ParamPosition;
-import com.dev.base.enums.SchemaType;
-import com.dev.base.json.JsonUtils;
-import com.dev.base.utils.MapUtils;
-import com.dev.doc.entity.Inter;
-import com.dev.doc.entity.InterParam;
-import com.dev.doc.entity.InterResp;
-import com.dev.doc.entity.Module;
-import com.dev.doc.entity.RespSchema;
-import com.dev.doc.vo.SchemaNodeInfo;
+import java.util.*;
 
 /**
  * 
@@ -349,6 +340,7 @@ public class DocExportUtil {
 			paramInfo.put("description", interParam.getDescription());
 			paramInfo.put("position", interParam.getPosition());
 			paramInfo.put("type", type.getCode());
+			paramInfo.put("required",interParam.isRequired());
 			
 			//只有参数位置为body才需要处理复合类型cust和ref
 			if (ParamPosition.body == interParam.getPosition()) {
@@ -394,6 +386,7 @@ public class DocExportUtil {
 			respInfo.put("name", interResp.getName());
 			respInfo.put("type", type);
 			respInfo.put("description", interResp.getDescription());
+			respInfo.put("required",interResp.isRequired());
 			
 			if (SchemaType.sys_ref == type) {
 				schema = respSchema.get(interResp.getRefSchemaId());

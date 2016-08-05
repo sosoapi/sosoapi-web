@@ -70,7 +70,7 @@
 										<td>${param.position}</td>
 										<td>${param.type}</td>
 										<td>${param.defValue}</td>
-										<td>${param.required!'false'}</td>
+										<td>${param.required}</td>
 										<td>
 											<textarea class="schema-format">
 ${param.schemaFormat}
