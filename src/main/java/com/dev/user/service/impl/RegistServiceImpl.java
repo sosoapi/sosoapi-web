@@ -127,7 +127,7 @@ public class RegistServiceImpl implements RegistService{
 			userBasicService.update(userBasic);
 			
 			//加入到demo项目组中
-			projectMemberService.accept(userBasic.getId(), 1L, Role.viewer);
+//			projectMemberService.accept(userBasic.getId(), 1L, Role.viewer);
 		}
 	}
 
