@@ -23,7 +23,7 @@ public interface InterDao extends BaseMybatisDao<Inter,Long> {
 			*@Description  
 			*@CreateDate 2015年8月15日下午2:23:41
 	 */
-	List<Inter> listAllByDocId(Long docId);
+	List<Inter> listAllByDocId(@Param("docId")Long docId,@Param("deprecated")Boolean deprecated);
 	
 	/**
 	 * 

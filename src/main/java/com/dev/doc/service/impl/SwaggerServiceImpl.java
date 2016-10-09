@@ -135,7 +135,7 @@ public class SwaggerServiceImpl implements SwaggerService{
 	
 	//创建方法
 	private void createPath(Swagger swagger,Long docId,Map<Long, String> refSchemaMap,Map<Long, String> moduleMap){
-		List<Inter> interList = interService.listAllByDocId(docId);
+		List<Inter> interList = interService.listAllByDocId(docId,false);
 		//获取文档所有的接口请求参数信息
 		Map<Long, List<InterParam>> paramInfoMap = getInterParamInfo(docId);
 		//获取文档所有的接口请求响应参数
@@ -249,7 +249,7 @@ public class SwaggerServiceImpl implements SwaggerService{
 		List<Module> moduleList = moduleService.listAllByDocId(docId);
 		
 		//接口列表
-		List<Inter> interList = interService.listAllByDocId(docId);
+		List<Inter> interList = interService.listAllByDocId(docId,false);
 		
 		//请求信息列表
 		Map<Long, List<InterParam>> paramInfoMap = getInterParamInfo(docId);

@@ -79,8 +79,8 @@ public class InterServiceImpl extends BaseMybatisServiceImpl<Inter,Long,InterDao
 	}
 
 	@Override
-	public List<Inter> listAllByDocId(Long docId) {
-		return getMybatisDao().listAllByDocId(docId);
+	public List<Inter> listAllByDocId(Long docId,Boolean deprecated) {
+		return getMybatisDao().listAllByDocId(docId,deprecated);
 	}
 
 	@Override

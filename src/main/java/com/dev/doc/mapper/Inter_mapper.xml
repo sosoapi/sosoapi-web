@@ -147,6 +147,10 @@
 			i.module_id = m.id
 		where
 			i.doc_id = #{docId}
+		<if test="deprecated != null">
+		and
+			i.deprecated = #{deprecated}
+		</if>
 		order by
 			m.sort_weight asc,i.sort_weight asc,create_date asc
 	</select>

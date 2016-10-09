@@ -223,7 +223,7 @@ public class CopyServiceImpl implements CopyService{
 	
 	//复制接口
 	private Map<Long, Long> cloneInter(Long srcDocId,Long cloneDocId,Map<Long, Long> moduleInfo){
-		List<Inter> srcList = interService.listAllByDocId(srcDocId);
+		List<Inter> srcList = interService.listAllByDocId(srcDocId,null);
 		Map<Long,Long> result = MapUtils.newMap();
 		Inter cloneInter = null;
 		Date now = DateUtil.getNow();

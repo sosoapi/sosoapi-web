@@ -20,7 +20,7 @@ public interface InterService extends BaseMybatisService<Inter, Long>{
 			*@Description  
 			*@CreateDate 2015年8月15日下午2:23:41
 	 */
-	List<Inter> listAllByDocId(Long docId);
+	List<Inter> listAllByDocId(Long docId,Boolean deprecated);
 	
 	/**
 	 * 
