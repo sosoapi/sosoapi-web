@@ -10,7 +10,7 @@ qq群：305629848
 参考doc目录下的部署文档
 
 ### 注意事项
-1、开源版本不再维护，最新版本可查看http://www.sosoapi.com
+1、开源版本不再维护，最新版本可查看http://www.sosoapi.com  
 2、开源版本界面ui为旧版，截图可查看http://jingyan.baidu.com/article/f54ae2fc03d9c31e92b849bf.html?_t=t
 
 ## License
