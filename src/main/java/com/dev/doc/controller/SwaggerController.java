@@ -130,7 +130,7 @@ public class SwaggerController extends BaseController{
 		Swagger swagger = swaggerService.buildApiDoc(userId, docId);
 		try {
             OutputStream outputStream = response.getOutputStream();
-            byte[] content = JsonUtils.toJson(swagger).getBytes();
+            byte[] content = JsonUtils.toJson(swagger).getBytes("UTF-8");
             outputStream.write(content);
             
             outputStream.close();
@@ -144,7 +144,7 @@ public class SwaggerController extends BaseController{
 	void dealOtherFormat(HttpServletResponse response,Long userId,Long docId){
 		Map<String, Object> result = swaggerService.buildDocTmplData(userId, docId);
         try {
-            Writer writer = new OutputStreamWriter(response.getOutputStream());
+            Writer writer = new OutputStreamWriter(response.getOutputStream(),"UTF-8");
             FreeMarkerUtil.processApiDoc(result, writer);
             
             writer.close();
