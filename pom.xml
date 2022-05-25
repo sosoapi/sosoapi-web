@@ -9,7 +9,7 @@
 	<properties>
 		<jdk.version>1.7</jdk.version>
 		<encoding.charset>UTF-8</encoding.charset>
-		<spring.version>4.0.1.RELEASE</spring.version>
+		<spring.version>5.2.22.RELEASE</spring.version>
 	</properties>
 
 	<!-- 发布组件到私服上 -->
